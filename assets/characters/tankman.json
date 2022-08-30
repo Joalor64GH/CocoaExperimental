@@ -1,0 +1,200 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-5,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "Tankman Idle Dance instance"
+		},
+		{
+			"offsets": [
+				-28,
+				-33
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Tankman Note Left instance"
+		},
+		{
+			"offsets": [
+				81,
+				-13
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Tankman Right Note instance"
+		},
+		{
+			"offsets": [
+				55,
+				47
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "Tankman UP note instance"
+		},
+		{
+			"offsets": [
+				53,
+				-106
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Tankman DOWN note instance"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-20,
+				-1
+			],
+			"anim": "singRIGHTmiss",
+			"fps": 24,
+			"name": "Tankman Note Leftm instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				55,
+				81
+			],
+			"anim": "singUPmiss",
+			"fps": 24,
+			"name": "Tankman UPm note instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				67,
+				-58
+			],
+			"anim": "singDOWNmiss",
+			"fps": 24,
+			"name": "Tankman DOWNm note instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				79,
+				26
+			],
+			"anim": "singLEFTmiss",
+			"fps": 24,
+			"name": "Tankman Rightm Note instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-12,
+				-7
+			],
+			"anim": "hey",
+			"fps": 24,
+			"name": "Tankman HEY instance",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-5,
+				15
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "pretty-good",
+			"indices": [],
+			"name": "PRETTY GOOD tankman instance"
+		},
+		{
+			"offsets": [
+				-20,
+				-8
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP-alt",
+			"indices": [],
+			"name": "TANKMAN UGH instance"
+		},
+		{
+			"offsets": [
+				-10,
+				59
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "firstDeath",
+			"indices": [],
+			"name": "Tank Dies"
+		},
+		{
+			"offsets": [
+				-24,
+				10
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "deathConfirm",
+			"indices": [],
+			"name": "Tankman Dead Confirm"
+		},
+		{
+			"offsets": [
+				-10,
+				-10
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "deathLoop",
+			"indices": [],
+			"name": "Tankman Dead Loop"
+		},
+		{
+			"offsets": [
+				-20,
+				6
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP-alt-miss",
+			"loop": false,
+			"name": "TANKMAN UGHm instance"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/tankmanCaptian",
+	"position": [
+		0,
+		240
+	],
+	"healthicon": "tankman",
+	"flip_x": true,
+	"healthbar_colors": [
+		255,
+		255,
+		255
+	],
+	"miss_duration": 1.3,
+	"camera_position": [
+		90,
+		60
+	],
+	"sing_duration": 4,
+	"scale": 1
+}
