@@ -43,9 +43,10 @@ class HealthIcon extends FlxSprite
 		if (!Paths.exists('images/$name.png'))
 			name = 'icons/face'; // Prevents crash from missing icon
 
+		var graphic = Paths.image(name);
 		// load the image with no function at all just for getting width and height size
-		loadGraphic(Paths.image(name));
-		loadGraphic(Paths.image(name), true, Std.int(width / 2), Std.int(height));
+		loadGraphic(graphic);
+		loadGraphic(graphic, true, Std.int(width / 2), Std.int(height));
 		// then load the real graphic
 
 		animation.add(char, [0, 1], 0, false, isPlayer);

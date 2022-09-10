@@ -27,6 +27,8 @@ class FunkySettings
 		'FREEPLAY_MENU' => [CONTROL]
 	];
 
+	public static var defaultControls(default, null):Map<String, Array<FlxKey>> = controls.copy().copy();
+
 	// ui
 	public static var noteSplash:Bool = true;
 	public static var timeLeft:Bool = true;

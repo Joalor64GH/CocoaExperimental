@@ -468,6 +468,7 @@ class AlphaCharacter extends FlxSprite
 		{
 			case '.':
 				animName = 'PERIOD bold';
+				y += 38;
 
 			case "'":
 				animName = 'APOSTRAPHIE bold';

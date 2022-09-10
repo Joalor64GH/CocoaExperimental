@@ -18,28 +18,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	var checkboxGroup:FlxTypedGroup<CoolCheckbox>;
 	var grpTexts:FlxTypedGroup<AbsoluteAlphabet>;
 
-	public function new()
+	function createOptions()
 	{
-		super();
-
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		bg.screenCenter();
-        bg.alpha = 0;
-		add(bg);
-
-		FlxTween.tween(bg, {alpha: 0.2}, 0.3, {ease: FlxEase.quadInOut});
-
-		// avoids lagspikes while scrolling through menus!
-		grpOptions = new FlxTypedGroup<Alphabet>();
-		add(grpOptions);
-
-		grpTexts = new FlxTypedGroup<AbsoluteAlphabet>();
-		add(grpTexts);
-
-		checkboxGroup = new FlxTypedGroup<CoolCheckbox>();
-		add(checkboxGroup);
-
-        var option:GameplayOption = new GameplayOption(
+		var option:GameplayOption = new GameplayOption(
             'Scroll Speed Multiplier', 'scroll_speed',
             'float'
         );
@@ -69,27 +50,58 @@ class GameplayChangersSubstate extends MusicBeatSubstate
         option.scrollSpeed = 1.4;
         addOption(option);
 
-        addOption(new GameplayOption('Mirror Notes', 'mirror_notes'));
-        addOption(new GameplayOption('Randomize Notes', 'randomize_notes'));
+		var option:GameplayOption = new GameplayOption('Mirror Notes', 'mirror_notes');
+		var option2:GameplayOption = new GameplayOption('Randomize Notes', 'randomize_notes');
+
+		option.incompatibleOption = option2;
+		option2.incompatibleOption = option;
+
+        addOption(option);
+        addOption(option2);
         addOption(new GameplayOption('No Note Types', 'no_note_types'));
         addOption(new GameplayOption('Instakill on Miss', 'instakill'));
         addOption(new GameplayOption('Practice Mode', 'practice_mode'));
         addOption(new GameplayOption('Botplay', 'botplay'));
         addOption(new GameplayOption('Opponent Mode', 'opponent_mode'));
+	}
+
+	public function new()
+	{
+		super();
+
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bg.screenCenter();
+        bg.alpha = 0;
+		add(bg);
+
+		FlxTween.tween(bg, {alpha: 0.66}, 0.6, {ease: FlxEase.quadInOut});
+
+		// avoids lagspikes while scrolling through menus!
+		grpOptions = new FlxTypedGroup<Alphabet>();
+		add(grpOptions);
+
+		grpTexts = new FlxTypedGroup<AbsoluteAlphabet>();
+		add(grpTexts);
+
+		checkboxGroup = new FlxTypedGroup<CoolCheckbox>();
+		add(checkboxGroup);
+
+		createOptions();
 
 		for (i in 0...optionsArray.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, 70 * i, optionsArray[i].optionName, false, false);
+			var optionText:Alphabet = new Alphabet(0, 70 * i, optionsArray[i].optionName, true, false, 0.05, 0.8);
 			optionText.isMenuItem = true;
 			optionText.x += 360;
-			optionText.xAdd += 100;
+			optionText.xAdd += 150;
 			optionText.targetY = i;
 			grpOptions.add(optionText);
 
 			if (optionsArray[i].type == 'bool')
 			{
-				var checkbox:CoolCheckbox = new CoolCheckbox(optionText.x - 105, optionText.y, optionsArray[i].value == true);
+				var checkbox:CoolCheckbox = new CoolCheckbox(optionText.x - 105, optionText.y - 50, optionsArray[i].value == true);
 				checkbox.tracker = optionText;
+				checkbox.offsetY = -50;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);
 			}
@@ -98,7 +110,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				optionText.x -= 120;
 				optionText.xAdd -= 120;
 
-				var valueText:AbsoluteAlphabet = new AbsoluteAlphabet('' + optionsArray[i].value, optionText.width + 80);
+				var valueText:AbsoluteAlphabet = new AbsoluteAlphabet('' + optionsArray[i].value, optionText.width + 80, true, 0.8);
 				valueText.tracker = optionText;
 				valueText.ID = i;
 				grpTexts.add(valueText);
@@ -162,6 +174,16 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 					curOption.value = !curOption.value;
 					reloadCheckboxes();
 					changeSelection();
+
+					var curOption:GameplayOption = optionsArray[curSelected];
+					if (curOption.incompatibleOption != null
+						&& curOption.type == 'bool'
+						&& curOption.value
+						&& curOption.incompatibleOption.type == 'bool')
+					{
+						curOption.incompatibleOption.value = false;
+						reloadCheckboxes();
+					}
 				}
 			}
 			else
@@ -341,6 +363,7 @@ class GameplayOption
     public var curOption:Int;
     public var optionArray:Array<String>;
 	public var child:Alphabet;
+	public var incompatibleOption:GameplayOption;
 
     public var changeValue:Float = 1;
 	public var minValue:Float; 
@@ -371,6 +394,7 @@ class GameplayOption
         'no_note_types' => false,
         'mirror_notes' => false,
         'instakill' => false,
+		'two_hand' => false,
     ];
 
     public static function loadGameplayOptions():Bool
@@ -395,6 +419,12 @@ class GameplayOption
 	public function setChild(alpha:Alphabet)
 	{
 		return child = alpha;
+	}
+
+	public function setIncompatibleOption(option:GameplayOption):GameplayOption
+	{
+		incompatibleOption = option;
+		return this;
 	}
 
 	function get_type():String 

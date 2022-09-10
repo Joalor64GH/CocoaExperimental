@@ -97,6 +97,7 @@ class FunkinLua
 		set('inChartEditor', false);
 
 		// Song/Week shit
+		@:privateAccess
 		set('curBpm', Conductor.bpm);
 		set('bpm', PlayState.SONG.bpm);
 		set('scrollSpeed', PlayState.SONG.speed);
@@ -1317,7 +1318,7 @@ class FunkinLua
 		{
 			var value1:String = arg1;
 			var value2:String = arg2;
-			PlayState.instance.eventNoteHit(null, name, value1, value2);
+			PlayState.instance.eventNoteHit(name, value1, value2);
 			// trace('Triggered event: ' + name + ', ' + value1 + ', ' + value2);
 			return true;
 		});

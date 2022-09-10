@@ -64,9 +64,6 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		if (!FlxG.sound.music.playing)
-			CocoaTools.resetMusic();
-
 		for (i in 0...WeekData.weeksList.length)
 		{
 			var leWeek:WeekFile = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
@@ -179,7 +176,7 @@ class FreeplayState extends MusicBeatState
 		if (Math.abs(lerpRating - intendedRating) <= 0.01)
 			lerpRating = intendedRating;
 
-		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + Math.floor(lerpRating * 100) + '%)';
+		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + CoolUtil.coolTruncater(lerpRating * 100, 2) + '%)';
 		positionHighscore();
 
 		var upP = controls.UI_UP_P;
@@ -259,7 +256,7 @@ class FreeplayState extends MusicBeatState
 
 			MusicBeatState.switchState(new PlayState());
 
-			FlxG.sound.music.volume = 0;
+			CocoaTools.destroyMusic(FlxG.sound.music);
 
 			destroyFreeplayVocals();
 		}

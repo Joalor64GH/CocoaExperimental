@@ -34,7 +34,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		endSoundName = 'gameOverEnd';
 	}
 
-	public function new(x:Float, y:Float, camX:Float, camY:Float, state:PlayState)
+	public function new(x:Float, y:Float, camX:Float, camY:Float, state:Dynamic)
 	{
 		instance = this;
 

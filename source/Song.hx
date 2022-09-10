@@ -26,7 +26,7 @@ typedef SwagSong =
 	var arrowSkin:String;
 	var splashSkin:String;
 	var validScore:Bool;
-	var events:Array<Array<Array<Dynamic>>>;
+	var events:Array<Array<Dynamic>>;
 }
 
 class Song
@@ -84,8 +84,20 @@ class Song
 		if (FileSystem.exists(eventFile))
 			songJson.events = parseEVENTshit(eventFile);
 		else
-			songJson.events = [];
+		{
+			eventFile = Paths.modsJson('$formattedFolder/events-psych.json');
+			
+			if (!FileSystem.exists(eventFile))
+				eventFile = Paths.json('$formattedFolder/events-psych.json');
 
+			if (FileSystem.exists(eventFile))
+				songJson.events = CocoaTools.convertEvents(File.getContent(eventFile));
+			else
+				songJson.events = [];
+		}
+
+		//trace(songJson.events);
+		
 		return songJson;
 	}
 
@@ -96,7 +108,7 @@ class Song
 		return swagShit;
 	}
 
-	public static function parseEVENTshit(rawJson:String):Array<Array<Array<Dynamic>>>
+	public static function parseEVENTshit(rawJson:String):Array<Array<Dynamic>>
 	{
 		return Json.parse(File.getContent(rawJson).trim()).events;
 	}

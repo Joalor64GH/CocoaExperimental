@@ -17,10 +17,6 @@ class UISubstate extends BaseOptionsSubstate
 		);
 		addOption(option);
 
-		var option:Option = new Option('Judgement Skin:', ['Sets judgements skin. (Check judgementList.txt in songs/)'], 'judgementSkin', 'string', 
-			CocoaTools.returnJudgements());
-		addOption(option);
-
 		var option:Option = new Option('Show FPS Counter', [
 			"A little FPS and memory counter will be shown on the top left.",
 			"FPS and memory counter will stay hidden."
@@ -32,20 +28,6 @@ class UISubstate extends BaseOptionsSubstate
 			'Score text will tween when you hit a note.',
 			'Score text will stay static when you hit a note.'
 		], 'scoreTween');
-		addOption(option);
-
-		var option:Option = new Option('Bounce Icons', [
-			'Icons\' angle will tween a little on beat hit.',
-			'Icons\' angle will stay static on beat hit.'
-		], 'bounce');
-		addOption(option);
-
-		var option:Option = new Option('Sustain Notes Style:', [
-			'Sustain notes will be put behind the strums.', // Stepmania
-			'Sustain notes will be put in front of the strums.', // Classic (Funkin)
-			'Sustain notes will be removed from the strums\njust like old versions of Friday Night Funkin\' did.' //Old
-		], 'sustainStyle', 'string',
-		['Stepmania', 'Funkin', 'Old'], true);
 		addOption(option);
 
 		var option:Option = new Option('Show Time Bar', [
@@ -67,6 +49,18 @@ class UISubstate extends BaseOptionsSubstate
 			"HUD will be hidden (doesn't include the time bar).",
 			'HUD will be shown (doesn\'t include the time bar).'
 		], 'hideHud');
+		addOption(option);
+
+		var option:Option = new Option('Sustain Notes Style:', [
+			'Sustain notes will be put behind the strums.', // Stepmania
+			'Sustain notes will be put in front of the strums.', // Classic (Funkin)
+			'Sustain notes will be removed from the strums\njust like old versions of Friday Night Funkin\' did.' //Old
+		], 'sustainStyle', 'string',
+		['Stepmania', 'Funkin', 'Old'], true);
+		addOption(option);
+
+		var option:Option = new Option('Judgement Skin:', ['Sets judgements skin. (Check judgementList.txt in songs/)'], 'judgementSkin', 'string', 
+		CocoaTools.returnJudgements());
 		addOption(option);
 
 		super();

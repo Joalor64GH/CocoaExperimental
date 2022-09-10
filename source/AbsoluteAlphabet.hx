@@ -6,9 +6,9 @@ class AbsoluteAlphabet extends Alphabet
 	public var offsetY:Float = 0;
 	public var tracker:Alphabet;
 
-	public function new(text:String = "", ?offsetX:Float = 0, ?offsetY:Float = 0, ?bold = false)
+	public function new(text:String = "", ?offsetX:Float = 0, ?offsetY:Float = 0, ?bold = false, ?scale:Float = 1)
 	{
-		super(0, 0, text, bold);
+		super(0, 0, text, bold, 0.05, scale);
 		isMenuItem = false;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;

@@ -17,6 +17,8 @@ final class FunkinScript extends SScript
     override public function new(?scriptFile:String = "")
     {
         super(scriptFile);
+
+        traces = false;
     }
 
     override function preset():Void
@@ -55,6 +57,11 @@ final class FunkinScript extends SScript
         set('addBehindBF', function(FlxBasic:FlxBasic)
         {
             return PlayState.instance.addBehindBF(FlxBasic);
+        });
+
+        set('addBehindDad', function(FlxBasic:FlxBasic)
+        {
+            return PlayState.instance.addBehindDad(FlxBasic);
         });
 
         set('get', function(id:String)

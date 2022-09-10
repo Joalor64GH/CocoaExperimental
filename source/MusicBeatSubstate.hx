@@ -1,12 +1,9 @@
 package;
 
 import Conductor.BPMChangeEvent;
-import flixel.FlxG;
-import flixel.FlxSubState;
-import flixel.FlxBasic;
-import flixel.FlxSprite;
+import flixel.addons.ui.FlxUISubState;
 
-class MusicBeatSubstate extends FlxSubState
+class MusicBeatSubstate extends CustomSubstate
 {
 	public function new()
 	{
@@ -62,5 +59,18 @@ class MusicBeatSubstate extends FlxSubState
 	public function beatHit():Void
 	{
 		// do literally nothing dumbass
+	}
+}
+
+class CustomSubstate extends FlxUISubState
+{
+	public function new()
+	{
+		super();
+	}
+
+	override public function destroy():Void
+	{
+		
 	}
 }

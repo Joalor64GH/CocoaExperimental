@@ -4,43 +4,23 @@ import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.FlxState;
+import lime.app.Application;
 
-class MusicBeatState extends FlxUIState
+class MusicBeatState extends CustomState
 {
 	var lastBeat:Float = 0;
 	var lastStep:Float = 0;
 
-	public var curStep:Int = 0;
-	public var curBeat:Int = 0;
+	public var curStep:Int;
+	public var curBeat:Int;
+
+	public var decStep:Float;
+	public var decBeat:Float;
 
 	var controls(get, never):Controls;
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
-
-	/**
-		If true, checks the active mods at the start of create().
-	**/
-	var checkMods:Bool = true;
-
-	override function create()
-	{
-		super.create();
-
-		if (checkMods)
-			Paths.checkModFolders();
-
-		destroySubStates = false;
-
-		// Custom made Trans out
-		if (!FlxTransitionableState.skipNextTransOut)
-		{
-			openSubState(new CustomFadeTransition(1, true));
-		}
-
-		FlxTransitionableState.skipNextTransOut = false;
-	}
 
 	override function update(elapsed:Float)
 	{
@@ -52,15 +32,18 @@ class MusicBeatState extends FlxUIState
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
 
+		Application.current.window.title = PlayState.applicationName;
+
 		super.update(elapsed);
 	}
 
-	function updateBeat():Void
+	public function updateBeat():Void
 	{
 		curBeat = Std.int(Math.ffloor(curStep / 4));
+		decBeat = decStep / 4;
 	}
 
-	function updateCurStep():Void
+	public function updateCurStep():Void
 	{
 		var lastChange:BPMChangeEvent = {
 			stepTime: 0,
@@ -74,10 +57,11 @@ class MusicBeatState extends FlxUIState
 				lastChange = Conductor.bpmChangeMap[i];
 		}
 
-		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition) - lastChange.songTime) / Conductor.stepCrochet);
+		curStep = lastChange.stepTime + Math.floor((Conductor.songPosition - lastChange.songTime) / Conductor.stepCrochet);
+		decStep = lastChange.stepTime + (Conductor.songPosition - lastChange.songTime) / Conductor.stepCrochet;
 	}
 
-	public static function switchState(nextState:FlxState)
+	public static function switchState(nextState:FlxUIState)
 	{
 		// Custom made Trans in
 		var curState:Dynamic = FlxG.state;
@@ -111,7 +95,9 @@ class MusicBeatState extends FlxUIState
 
 	public static function resetState()
 	{
-		MusicBeatState.switchState(FlxG.state);
+		var state:Dynamic = FlxG.state;
+		var actualState:FlxUIState = state;
+		MusicBeatState.switchState(actualState);
 	}
 
 	public static function getState():MusicBeatState
@@ -130,5 +116,25 @@ class MusicBeatState extends FlxUIState
 	public function beatHit():Void
 	{
 		// do literally nothing dumbass
+	}
+}
+
+class CustomState extends FlxUIState
+{
+	override function create():Void
+	{
+		super.create();
+
+		Paths.checkModFolders();
+
+		destroySubStates = false;
+
+		// Custom made Trans out
+		if (!FlxTransitionableState.skipNextTransOut)
+		{
+			openSubState(new CustomFadeTransition(1, true));
+		}
+
+		FlxTransitionableState.skipNextTransOut = false;
 	}
 }

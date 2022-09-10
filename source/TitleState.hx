@@ -97,8 +97,7 @@ class TitleState extends MusicBeatState
 	{
 		if (!initialized)
 		{
-			if (FlxG.sound.music == null) 
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 		}
 
 		Conductor.changeBPM(102);
@@ -336,13 +335,11 @@ class TitleState extends MusicBeatState
 			switch (curBeat)
 			{
 				case 1:
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					createCoolText(['ninjamuffin99', 'PhantomArcade'], 45);
+					createCoolText(['Cocoa', 'by'], 45);
 				case 3:
-					addMoreText('kawaisprite', 45);
-					addMoreText('evilsk8r', 45);
+					addMoreText('TheWorldMachine', 45);
 				case 4:
 					deleteCoolText();
 				case 5:

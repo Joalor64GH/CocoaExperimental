@@ -595,12 +595,8 @@ class DialogueBoxPsych extends FlxSpriteGroup
 
 	public static function parseDialogue(path:String):DialogueFile
 	{
-		#if MODS_ALLOWED
 		var rawJson = File.getContent(path);
-		#else
-		var rawJson = Assets.getText(path);
-		#end
-		return cast Json.parse(rawJson);
+		return Json.parse(rawJson);
 	}
 
 	public static function updateBoxOffsets(box:FlxSprite)

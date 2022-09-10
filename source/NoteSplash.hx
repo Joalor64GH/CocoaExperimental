@@ -47,6 +47,8 @@ class NoteSplash extends FlxSprite
 			animation.play('hurt splash', true);
 		else if (note.noteType == 'Must Press Note')
 			animation.play('dodge splash', true);
+		else if (note.noteSplashTexture != null)
+			animation.play(note.noteSplashTexture, true);
 		else
 			animation.play('splash 0 ${note.noteData}', true);
 
@@ -58,9 +60,7 @@ class NoteSplash extends FlxSprite
 		if (PlayState.isPixelStage)
 			animation.curAnim.frameRate = 10;
 		else
-			animation.curAnim.frameRate = 20;
-
-		updateHitbox();
+			animation.curAnim.frameRate = 18;
 
 		offset.set(width * 0.29, height * 0.29);
 	}

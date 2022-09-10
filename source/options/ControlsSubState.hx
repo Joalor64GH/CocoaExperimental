@@ -116,7 +116,7 @@ class ControlsSubState extends MusicBeatSubstate
 			{
 				if (optionShit[curSelected][0] == defaultKey)
 				{
-					controlMap = FunkySettings.controls.copy();
+					controlMap = FunkySettings.defaultControls.copy();
 					reloadKeys();
 					changeSelection();
 					FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -150,7 +150,7 @@ class ControlsSubState extends MusicBeatSubstate
 				}
 				controlMap.set(optionShit[curSelected][1], keysArray);
 
-				reloadKeys();
+				reloadKey(getInputTextNum(), keysArray[curAlt ? 1 : 0]);
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 				rebindingKey = false;
 			}
@@ -303,6 +303,17 @@ class ControlsSubState extends MusicBeatSubstate
 		text2.tracker = optionText;
 		grpInputsAlt.push(text2);
 		add(text2);
+	}
+
+	function reloadKey(index:Int, key:FlxKey):Void
+	{
+		var item:AbsoluteAlphabet = grpInputs[index];
+
+		if (curAlt)
+			item = grpInputsAlt[index];
+		
+		item.changeText(InputFormatter.getKeyName(key));
+		item.alpha = 1;
 	}
 
 	function reloadKeys()

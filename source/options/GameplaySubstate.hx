@@ -18,13 +18,7 @@ class GameplaySubstate extends BaseOptionsSubstate
 
 		var option:Option = new Option('Middlescroll', ['Your strumline will get centered.', 'Your strumline won\'t get centered.'], 'middleScroll');
 		addOption(option);
-
-		var option:Option = new Option('Allow Swapping Sides', [
-			'Game will allow you to swap sides in pause menu.\nYou can\'t switch swap sides in story mode.',
-			'Game won\'t allow you to swap sides in-game.'
-		], 'allowSwap');
-		addOption(option);
-
+		
 		var option:Option = new Option('Hitsound Volume:', ['Sets your hitsound volume,\nit will be played when you hit a note.'], 'hitSounds', 'float');
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.0;

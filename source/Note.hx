@@ -17,10 +17,12 @@ class Note extends FlxSprite
 	public var wasGoodHit:Bool = false;
 	public var ignoreNote:Bool = false;
 	public var prevNote:Note;
+	public var wasHit:Bool;
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
 	public var noteType(default, set):String = null;
+	public var noteSplashTexture(default, set):String;
 
 	public var eventName:String = '';
 	public var eventVal1:String = '';
@@ -29,7 +31,7 @@ class Note extends FlxSprite
 	public var colorSwap:ColorSwap;
 	public var inEditor:Bool = false;
 
-	var earlyHitMult:Float = 0.675;
+	var earlyHitMult:Float = 0.5;
 
 	public var offsetX:Float;
 
@@ -85,7 +87,7 @@ class Note extends FlxSprite
 
 	public function resize(offset:Float)
 	{
-		if (isSustainNote && !animation.curAnim.name.endsWith('end'))
+		if (isSustainNote && animation.curAnim != null &&!animation.curAnim.name.endsWith('end'))
 		{
 			scale.y *= offset;
 			updateHitbox();
@@ -355,5 +357,10 @@ class Note extends FlxSprite
 			/*if (alpha > 0.3)
 				alpha = 0.3; */
 		}
+	}
+
+	function set_noteSplashTexture(value:String):String 
+	{
+		return noteSplashTexture = value;
 	}
 }

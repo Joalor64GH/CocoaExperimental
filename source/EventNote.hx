@@ -1,6 +1,5 @@
 package;
 
-import editors.ChartingState.AbsoluteFlxText;
 import flixel.FlxSprite;
 
 class EventNote extends FlxSprite
@@ -10,6 +9,7 @@ class EventNote extends FlxSprite
 	public var val1:String;
 	public var val2:String;
 	public var child:AbsoluteFlxText;
+	public var allowExecute:Bool = true;
 
 	public function new(event:String, strumTime:Float, val1:String, val2:String)
 	{

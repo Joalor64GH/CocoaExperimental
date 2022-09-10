@@ -69,7 +69,7 @@ class Paths
 	}
 
 	public static function clearTrashMemory()
-	{
+	{	
 		for (key in customImagesLoaded.keys())
 		{
 			if (!garbageAssets.contains(key))
@@ -184,7 +184,7 @@ class Paths
 		return customSoundsLoaded.get(path);
 	}
 
-	inline static public function image(key:String):FlxGraphic
+	public static function image(key:String):FlxGraphic
 	{
 		return addCustomGraphic(key);
 	}
@@ -241,15 +241,20 @@ class Paths
 
 		if (!customImagesLoaded.exists(key))
 		{
-			var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(path));
+			var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(path), false, key, false);
 			newGraphic.persist = true;
 			customImagesLoaded.set(key, newGraphic);
+			
+			if (!garbageAssets.contains(path))
+				garbageAssets.push(path);
 		}
 
-		if (!garbageAssets.contains(path))
-			garbageAssets.push(path);
+		var graphic:FlxGraphic = customImagesLoaded.get(key);
+		if (graphic != null)
+			return graphic;
 
-		return customImagesLoaded.get(key);
+		trace('$key was not found and returned null!');
+		return null;
 	}
 
 	static public function mods(key:String)

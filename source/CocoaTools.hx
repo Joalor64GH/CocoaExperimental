@@ -1,5 +1,7 @@
 package;
 
+import flixel.system.FlxSound;
+import haxe.Json;
 import sys.io.File;
 
 // lmao using CocoaTools in CocoaTools
@@ -8,8 +10,6 @@ using StringTools;
 
 class CocoaTools
 {
-	public static var random(default, null):CocoaRandom = new CocoaRandom();
-
 	public static function resetMusic(?checkPlaying:Bool = true)
 	{
 		if (FlxG.sound.music != null)
@@ -19,13 +19,19 @@ class CocoaTools
 		FlxG.sound.playMusic(Paths.music('freakyMenu'));
 	}
 
+	public static function destroyMusic(music:FlxSound)
+	{
+		music.stop();
+		music.destroy();
+	}
+
 	public static function returnJudgements():Array<String>
 	{
 		var array:Array<String> = File.getContent(Paths.getPath('songs/judgementList.txt')).split(':');
 		return array.copy().toUpperCase().replace(' ', '');
 	}
 
-	public static function beautifyEvents(event:Array<Array<Array<Dynamic>>>):Array<Array<Array<Dynamic>>>
+	public static function beautifyEvents(event:Array<Array<Dynamic>>):Array<Array<Dynamic>>
 	{
 		for (i in event)
 			if (i == null)
@@ -37,6 +43,25 @@ class CocoaTools
 			}
 
 		return event;
+	}
+
+	public static function convertEvents(rawJson:String):Array<Array<Dynamic>>
+	{
+		var willReturn:Array<Array<Dynamic>> = [];
+		var got:Array<Array<Dynamic>> = Json.parse(rawJson).events;
+
+		for (i in got)
+		{
+			if (i[0] == null)
+				i[0] = -1;
+
+			var values:Array<Dynamic> = i[1];
+
+			for (e in values)
+				willReturn.push([e[0], i[0], e[1], e[2]]);
+		}
+
+		return willReturn;
 	}
 
 	public static function toLowerCase(array:Array<String>):Array<String>
@@ -82,41 +107,5 @@ class CocoaTools
 		}
 
 		return array = copy;
-	}
-
-	public static function copy(bool:Null<Bool>):Bool
-	{
-		var string:String = Std.string(bool);
-		var copy:Bool = true;
-
-		if (string == 'null' || string == 'false')
-			copy = false;
-
-		return copy;
-	}
-}
-
-class CocoaRandom
-{
-	public function new()
-	{}
-
-	public function bool(float:Float = 50)
-	{
-		float /= 100;
-
-		var num:Float = 0;
-
-		while (true)
-		{
-			var random:Float = Math.random();
-			if (random >= 0)
-			{
-				num = random;
-				break;
-			}
-		}
-
-		return num <= float;
 	}
 }

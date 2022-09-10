@@ -1,5 +1,4 @@
 package;
-
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -25,9 +24,12 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var cocoaVersion:String = '1.0';
+	public static var cocoaVersion:String = '0.1 Unstable';
 	public static var psychEngineVersion:String = '0.4'; // This is also used for Discord RPC (not anymore)
 	public static var curSelected:Int = 0;
+	
+	var cocoaShit:FlxText;
+	var cocoaColor:FlxTween;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var camGame:FlxCamera;
@@ -39,6 +41,17 @@ class MainMenuState extends MusicBeatState
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		#if !switch 'donate', #end
 		'options'
+	];
+
+	var colors:Array<FlxColor> = [
+		FlxColor.RED,
+		FlxColor.ORANGE,
+		FlxColor.YELLOW,
+		FlxColor.CYAN,
+		FlxColor.GREEN,
+		FlxColor.BLUE,
+		FlxColor.fromRGB(75, 0, 130),
+		FlxColor.fromRGB(252, 43, 240),
 	];
 
 	var magenta:FlxSprite;
@@ -54,9 +67,6 @@ class MainMenuState extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 			CocoaTools.resetMusic();
-
-		Paths.clearMemory();
-		Paths.clearTrashMemory();
 
 		camGame = new FlxCamera();
 		camAchievement = new FlxCamera();
@@ -121,7 +131,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, optionShit.length / 10);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Psych Engine v" + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -129,10 +139,10 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, 'Cocoa v${cocoaVersion}', 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
+		cocoaShit = new FlxText(12, FlxG.height - 64, 0, 'Cocoa v${cocoaVersion}', 12);
+		cocoaShit.scrollFactor.set();
+		cocoaShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(cocoaShit);
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -141,7 +151,7 @@ class MainMenuState extends MusicBeatState
 		#if ACHIEVEMENTS_ALLOWED
 		Achievements.loadAchievements();
 		var leDate = Date.now();
-		if (!Achievements.isUnlocked('friday_night_play'))
+		if (!Achievements.isUnlocked('friday_night_play') && leDate.getDay() == 5 && leDate.getHours() >= 18)
 		{ // It's a friday night. WEEEEEEEEEEEEEEEEEE
 			var stat = Achievements.createStat();
 			giveAchievement();
@@ -173,6 +183,9 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
+
+		if (FlxG.sound.music != null)
+			Conductor.songPosition = FlxG.sound.music.time;
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 5.6, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
@@ -295,5 +308,18 @@ class MainMenuState extends MusicBeatState
 				// FlxG.log.add(spr.frameWidth);
 			}
 		});
+	}
+
+	override function stepHit()
+	{
+		super.stepHit();
+
+		if (curStep % 2 == 0)
+		{
+			if (cocoaColor != null)
+				cocoaColor.cancel();
+			
+			cocoaColor = FlxTween.color(cocoaShit, 0.4, cocoaShit.color, colors[curStep % 8], {onComplete: function(twn) cocoaColor = null});
+		}
 	}
 }

@@ -2,6 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
+	<!--To change your app name change "applicationName" in PlayState.hx-->
 	<app title="Friday Night Funkin'" file="Funkin" packageName="com.tahirarch.cocoa" package="com.tahirarch.cocoa" main="Main" version="0.2.8" company="TahirArch" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
@@ -70,19 +71,19 @@
 	-->
 	<!-- _______________________________ Libraries ______________________________ -->
 
+	<haxelib name="discord_rpc" if="desktop"/>
+	
 	<haxelib name="flixel" />
 	<haxedev set='webgl' />
 
 	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
-	<haxelib name="hscript" />
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="faxe" if='switch'/>
 	<!--<haxelib name="polymod"/> -->
-	<haxelib name="discord_rpc" if="desktop"/>
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 	<haxelib name="SScript" if="SCRIPT_ALLOWED"/>
 
