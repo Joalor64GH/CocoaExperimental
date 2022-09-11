@@ -13,7 +13,7 @@ class NoteSplash extends FlxSprite
 	{
 		super(x, y);
 
-		var skin:String = PlayState.SONG.arrowSkin;
+		var skin:String = PlayState.SONG.splashSkin;
 
 		if (skin == null)
 			skin = (PlayState.isPixelStage ? 'AllnoteSplashesPIXEL' : 'AllnoteSplashes');

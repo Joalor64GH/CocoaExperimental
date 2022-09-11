@@ -16,19 +16,23 @@ class AbsoluteSprite extends FlxSprite
 	public var copyAlpha:Bool = true;
 	public var copyVisible:Bool = false;
 
-	public function new(file:String, ?anim:String = null, ?loop:Bool = false)
+	public function new(?file:String, ?anim:String = null, ?loop:Bool = false, ?setScrollFactor:Bool = true)
 	{
 		super();
-		if (anim != null)
+		if (file != null)
 		{
-			frames = Paths.getSparrowAtlas(file);
-			animation.addByPrefix('idle', anim, 24, loop);
-			animation.play('idle');
+			if (anim != null)
+			{
+				frames = Paths.getSparrowAtlas(file);
+				animation.addByPrefix('idle', anim, 24, loop);
+				animation.play('idle');
+			}
+			else
+			{
+				loadGraphic(Paths.image(file));
+			}
 		}
-		else
-		{
-			loadGraphic(Paths.image(file));
-		}
+
 		antialiasing = !FunkySettings.noAntialiasing;
 		scrollFactor.set();
 	}

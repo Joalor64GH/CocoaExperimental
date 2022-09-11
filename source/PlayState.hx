@@ -2097,8 +2097,6 @@ class PlayState extends MusicBeatState
 				trace(eventNote.strumTime);
 			}
 
-		trace(events);
-
 		// trace(unspawnNotes.length);
 		// playerCounter += 1;
 

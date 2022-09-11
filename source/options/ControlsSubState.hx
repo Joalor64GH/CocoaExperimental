@@ -33,8 +33,7 @@ class ControlsSubState extends MusicBeatSubstate
 		super();
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		menuBG.color = 0xFFFFFF00;
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+		menuBG.color = 0xFFea71fd;
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.antialiasing = true;

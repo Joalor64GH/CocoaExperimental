@@ -42,7 +42,7 @@ class BaseOptionsSubstate extends MusicBeatSubstate
 		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFFFFF00;
+		bg.color = 0xFFea71fd;
 		bg.screenCenter();
 		bg.antialiasing = !FunkySettings.noAntialiasing;
 		add(bg);

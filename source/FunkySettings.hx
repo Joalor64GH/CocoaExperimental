@@ -96,7 +96,7 @@ class FunkySettings
 
 		saveControls();
 
-		var flush:Bool = save.flush();
+		var flush:Bool = save.flush() && achieveSave.flush();
 		// trace(flush);
 		return flush && FlxG.save.flush();
 	}

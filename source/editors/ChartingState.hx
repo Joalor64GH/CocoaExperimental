@@ -1970,7 +1970,7 @@ class ChartingState extends MusicBeatState
 
 				var daText:AbsoluteFlxText = new AbsoluteFlxText(100, theType, 24);
 				daText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-				daText.offsetX = 12;
+				daText.offsetX = -36;
 				daText.offsetY = 6;
 				daText.borderSize = 1;
 				curRenderedNoteType.add(daText);
