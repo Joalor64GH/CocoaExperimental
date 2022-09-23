@@ -103,6 +103,33 @@
 				52
 			],
 			"name": "Pico shoot 4"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24
+			],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "Pico shoot 1"
 		}
 	],
 	"no_antialiasing": false,
@@ -118,6 +145,7 @@
 		216,
 		85
 	],
+	"miss_duration": 1.5,
 	"camera_position": [
 		-310,
 		100

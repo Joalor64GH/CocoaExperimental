@@ -1,9 +1,8 @@
 package;
 
 import Section.SwagSection;
+import haxe.Exception;
 import haxe.Json;
-import haxe.format.JsonParser;
-import lime.utils.Assets;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -26,7 +25,7 @@ typedef SwagSong =
 	var arrowSkin:String;
 	var splashSkin:String;
 	var validScore:Bool;
-	var events:Array<Array<Dynamic>>;
+	var events:Array<Dynamic>;
 }
 
 class Song
@@ -76,28 +75,25 @@ class Song
 
 		var songJson:SwagSong = parseJSONshit(rawJson);
 
-		var eventFile:String = Paths.modsJson('$formattedFolder/events.json');
+		var eventFile:String = Paths.modsJson('$formattedFolder/events');
 
 		if (!FileSystem.exists(eventFile))
-			eventFile = Paths.json('$formattedFolder/events.json');
+			eventFile = Paths.json('$formattedFolder/events');
 
-		if (FileSystem.exists(eventFile))
-			songJson.events = parseEVENTshit(eventFile);
-		else
+		try 
 		{
-			eventFile = Paths.modsJson('$formattedFolder/events-psych.json');
+			songJson.events = parseEVENTshit(eventFile);
 			
-			if (!FileSystem.exists(eventFile))
-				eventFile = Paths.json('$formattedFolder/events-psych.json');
-
-			if (FileSystem.exists(eventFile))
-				songJson.events = CocoaTools.convertEvents(File.getContent(eventFile));
-			else
+			if (songJson.events == null)
 				songJson.events = [];
 		}
+		catch (e:Exception)
+		{
+			songJson.events = [];
+		}
 
-		//trace(songJson.events);
-		
+		// trace(songJson.events);
+
 		return songJson;
 	}
 
@@ -110,6 +106,8 @@ class Song
 
 	public static function parseEVENTshit(rawJson:String):Array<Array<Dynamic>>
 	{
-		return Json.parse(File.getContent(rawJson).trim()).events;
+		var events:Dynamic = Json.parse(File.getContent(rawJson.trim()).trim());
+		var songEvents = events.song;
+		return if (songEvents != null) songEvents.events else events.events;
 	}
 }

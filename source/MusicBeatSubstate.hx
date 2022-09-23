@@ -71,6 +71,5 @@ class CustomSubstate extends FlxUISubState
 
 	override public function destroy():Void
 	{
-		
 	}
 }

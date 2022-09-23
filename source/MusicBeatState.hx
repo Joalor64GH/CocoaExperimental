@@ -69,7 +69,7 @@ class MusicBeatState extends CustomState
 		if (!FlxTransitionableState.skipNextTransIn)
 		{
 			leState.openSubState(new CustomFadeTransition(0.7, false));
-			if (nextState == FlxG.state)
+			if (nextState == leState)
 			{
 				CustomFadeTransition.finishCallback = function()
 				{

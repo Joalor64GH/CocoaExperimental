@@ -22,6 +22,8 @@ class AchievementsSubstate extends MusicBeatSubstate
 	var left:FlxText;
 	var right:FlxText;
 
+	var tweens:Array<FlxTween> = [];
+
 	var canMove:Bool;
 
 	static var curSelected:Int;
@@ -86,24 +88,24 @@ class AchievementsSubstate extends MusicBeatSubstate
 
 		new FlxTimer().start(0.2, function(tmr)
 		{
-			FlxTween.tween(icon, {y: FlxG.height / 2 - 140}, 1, {ease: FlxEase.expoInOut});
+			tweens.push(FlxTween.tween(icon, {y: FlxG.height / 2 - 140}, 1, {ease: FlxEase.expoInOut}));
 
 			new FlxTimer().start(0.2, function(tmr)
 			{
-				FlxTween.tween(name, {x: Std.parseFloat(nameX)}, 1, {ease: FlxEase.expoInOut});
+				tweens.push(FlxTween.tween(name, {x: Std.parseFloat(nameX)}, 1, {ease: FlxEase.expoInOut}));
 
 				new FlxTimer().start(0.2, function(tmr)
 				{
-					FlxTween.tween(desc, {x: Std.parseFloat(descX)}, 1, {ease: FlxEase.expoInOut});
+					tweens.push(FlxTween.tween(desc, {x: Std.parseFloat(descX)}, 1, {ease: FlxEase.expoInOut}));
 
 					new FlxTimer().start(0.4, function(tmr)
 					{
-						FlxTween.tween(left, {y: FlxG.height / 2 + 250}, 1, {ease: FlxEase.expoInOut});
-						FlxTween.tween(right, {y: FlxG.height / 2 + 250}, 1, {ease: FlxEase.expoInOut});
+						tweens.push(FlxTween.tween(left, {y: FlxG.height / 2 + 250}, 1, {ease: FlxEase.expoInOut}));
+						tweens.push(FlxTween.tween(right, {y: FlxG.height / 2 + 250}, 1, {ease: FlxEase.expoInOut}));
 
 						new FlxTimer().start(0.1, function(tmr)
 						{
-							FlxTween.tween(statText, {y: FlxG.height / 2 + 250}, 1, {ease: FlxEase.expoInOut});
+							tweens.push(FlxTween.tween(statText, {y: FlxG.height / 2 + 250}, 1, {ease: FlxEase.expoInOut}));
 							canMove = true;
 						});
 					});
@@ -118,6 +120,16 @@ class AchievementsSubstate extends MusicBeatSubstate
 
 		if (controls.BACK)
 			close();
+
+		/*if (controls.ACCEPT)
+			for (tween in tweens)
+				if (tween.active)
+				{
+					@:privateAccess
+					tween.finish();
+					tweens.remove(tween);
+					tween = null;
+				}*/
 
 		if (canMove)
 		{
@@ -179,8 +191,7 @@ class AchievementsSubstate extends MusicBeatSubstate
 					else
 						statText.text = 'Used Difficulty: None';
 				case 3:
-					if (stat.accuracy != Math.NEGATIVE_INFINITY
-						&& stat.accuracy != null)
+					if (stat.accuracy != Math.NEGATIVE_INFINITY && stat.accuracy != null)
 						statText.text = 'Accuracy: ${stat.accuracy}';
 					else
 						statText.text = 'Accuracy: None';
@@ -189,7 +200,6 @@ class AchievementsSubstate extends MusicBeatSubstate
 						statText.text = 'Misses: ${stat.misses}';
 					else
 						statText.text = 'Misses: None';
-				
 			}
 		}
 	}

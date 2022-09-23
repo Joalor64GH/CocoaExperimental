@@ -73,6 +73,12 @@ class Achievements
 			false
 		],
 		[
+			"Road to 10 Million",
+			"Gain 10 million scores in total.",
+			'ten_million',
+			false
+		],
+		[
 			"Roadkill Enthusiast",
 			"Watch the Henchmen die over 100 times.",
 			'roadkill_enthusiast',
@@ -87,7 +93,7 @@ class Achievements
 			'toastie',
 			false
 		],
-		["Debugger", "Beat the \"Test\" Stage from the Chart Editor.", 'debugger', true]
+		["Debugger", "Beat the \"Test\" Stage from the Chart Editor.", 'debugger', true],
 	];
 
 	public static var achievementMap:Map<String, Bool> = new Map();
@@ -186,7 +192,7 @@ class Achievements
 	public static function loadStats():Bool
 	{
 		var achieveSave:FlxSave = FunkySettings.bind('achievements');
-		
+
 		if (achieveSave.data.achievementStats != null)
 		{
 			achievementStats = achieveSave.data.achievementStats;

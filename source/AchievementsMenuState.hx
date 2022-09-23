@@ -34,8 +34,7 @@ class AchievementsMenuState extends MusicBeatState
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		menuBG.color = 0xFFea71fd;
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.antialiasing = !FunkySettings.noAntialiasing;
@@ -77,8 +76,11 @@ class AchievementsMenuState extends MusicBeatState
 		changeSelection();
 
 		var controls = FunkySettings.controls.copy().get('ACCEPT')[0];
-		achieveText = new FlxText(0, FlxG.height - 680, 900, 'Press $controls to show advanced information\nabout this achievement.');
+		achieveText = new FlxText(75, FlxG.height - 680, 0, 'Press $controls to show advanced information about this achievement.');
 		achieveText.setFormat(Paths.font('vcr.ttf'), 24, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		achieveText.borderQuality = 2;
+		achieveText.screenCenter(X);
+		achieveText.y -= 20;
 		achieveText.scrollFactor.set();
 		add(achieveText);
 
@@ -147,6 +149,8 @@ class AchievementsMenuState extends MusicBeatState
 		}
 
 		descText.text = Achievements.achievementsStuff[achievementIndex[curSelected]][1];
+		if (descText.text == Achievements.getDesc('ten_million'))
+			descText.text += '\nGained Score: ${CocoaTools.formatScore(Highscore.totalScore)}';
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 	}
 	#end

@@ -7,7 +7,7 @@ class GraphicsSubstate extends BaseOptionsSubstate
 	public function new()
 	{
 		title = 'Graphics';
-		rpcTitle = 'Graphics Settings Menu'; 
+		rpcTitle = 'Graphics Settings Menu';
 
 		var character:String = 'bf';
 
@@ -35,10 +35,8 @@ class GraphicsSubstate extends BaseOptionsSubstate
 		option.onChange = onChangeFramerate;
 		addOption(option);
 
-		var option:Option = new Option('Color Blindness Filter:', [
-				'Sets a color filter to the entire game\nfor color blind people if not "NONE".'
-			], 'colorFilter', 'dynamic', ColorBlindness.colorFilters
-		);
+		var option:Option = new Option('Color Blindness Filter:', ['Sets a color filter to the entire game\nfor color blind people if not "NONE".'],
+			'colorFilter', 'dynamic', ColorBlindness.colorFilters);
 		option.onChange = ColorBlindness.setFilter;
 		addOption(option);
 
@@ -50,7 +48,7 @@ class GraphicsSubstate extends BaseOptionsSubstate
 		boyfriend.visible = false;
 		if (character != 'controller-lmao')
 			boyfriend.setGraphicSize(Std.int(boyfriend.width * 0.7));
-		else 
+		else
 		{
 			boyfriend.y += 50;
 			boyfriend.setGraphicSize(Std.int(boyfriend.width * 0.9));

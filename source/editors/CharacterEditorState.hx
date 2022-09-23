@@ -32,9 +32,7 @@ import Character;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import lime.system.Clipboard;
 import flixel.animation.FlxAnimation;
-#if MODS_ALLOWED
 import sys.FileSystem;
-#end
 
 using StringTools;
 
@@ -405,7 +403,7 @@ class CharacterEditorState extends MusicBeatState
 		singDurationStepper.value = char.singDuration;
 		missDurationStepper = new FlxUINumericStepper(15, singDurationStepper.y + 40, 0.1, 4, 0, 999, 1);
 		missDurationStepper.value = char.missDuration;
-	
+
 		flipXCheckBox = new FlxUICheckBox(singDurationStepper.x + 80, singDurationStepper.y, null, null, "Flip X", 50);
 		flipXCheckBox.checked = char.flipX;
 		if (char.isPlayer)
@@ -436,7 +434,7 @@ class CharacterEditorState extends MusicBeatState
 		positionCameraXStepper = new FlxUINumericStepper(positionXStepper.x, positionXStepper.y + 40, 10, char.cameraPosition[0], -9000, 9000, 0);
 		positionCameraYStepper = new FlxUINumericStepper(positionYStepper.x, positionYStepper.y + 40, 10, char.cameraPosition[1], -9000, 9000, 0);
 
-		scaleStepper = new FlxUINumericStepper(positionXStepper.x, positionXStepper.y - 45, 0.1, 1, 0.05, 10, 1);
+		scaleStepper = new FlxUINumericStepper(positionXStepper.x, positionXStepper.y - 40, 0.1, 1, 0.05, 10, 1);
 
 		var saveCharacterButton:FlxButton = new FlxButton(reloadImage.x, noAntialiasingCheckBox.y + 40, "Save Character", function()
 		{
@@ -963,7 +961,6 @@ class CharacterEditorState extends MusicBeatState
 	{
 		var charsLoaded:Map<String, Bool> = new Map();
 
-		#if MODS_ALLOWED
 		characterList = [];
 		var directories:Array<String> = [Paths.mods('characters/'), Paths.getPath('characters/')];
 		for (i in 0...directories.length)
@@ -986,9 +983,6 @@ class CharacterEditorState extends MusicBeatState
 				}
 			}
 		}
-		#else
-		characterList = CoolUtil.coolTextFile(Paths.txt('characterList'));
-		#end
 
 		charDropDown.setData(FlxUIDropDownMenuCustom.makeStrIdLabelArray(characterList, true));
 		charDropDown.selectedLabel = daAnim;

@@ -10,7 +10,7 @@ class NerfedEtterna
 	{
 		var max_points:Float = 1.0;
 		var miss_weight:Float = 0.25;
-		var ridic:Float = Math.pow(11 * ts, 1.425);
+		var ridic:Float = Math.pow(11 * ts, 1.415);
 		var max_boo_weight:Float = 130 * ts;
 		var ts_pow:Float = 0.825;
 		var zero:Float = 65 * (Math.pow(ts, ts_pow));

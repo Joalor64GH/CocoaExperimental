@@ -8,15 +8,16 @@ class EventNote extends FlxSprite
 	public var strumTime:Float;
 	public var val1:String;
 	public var val2:String;
+	public var val3:String;
 	public var child:AbsoluteFlxText;
-	public var allowExecute:Bool = true;
 
-	public function new(event:String, strumTime:Float, val1:String, val2:String)
+	public function new(event:String, strumTime:Float, val1:String, val2:String, val3:String)
 	{
 		this.event = event;
 		this.strumTime = strumTime;
 		this.val1 = val1;
 		this.val2 = val2;
+		this.val3 = val3;
 
 		super();
 

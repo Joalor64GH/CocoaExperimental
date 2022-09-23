@@ -15,7 +15,13 @@ class OptionsMenu extends MusicBeatState
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	var text:FlxText;
-	var controlsStrings:Array<String> = ['Controls', 'Gameplay', 'Visuals and UI', 'Graphics', 'Note',];
+	var controlsStrings:Array<String> = [
+		'Controls', 
+		'Gameplay', 
+		'Visuals and UI', 
+		'Graphics', 
+		'Note',		
+	];
 	var grpControls:FlxTypedGroup<Alphabet>;
 	var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;

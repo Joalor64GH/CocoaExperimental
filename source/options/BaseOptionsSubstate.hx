@@ -126,10 +126,9 @@ class BaseOptionsSubstate extends MusicBeatSubstate
 		var num:Int = optionsArray[curSelected].curOption;
 		var optionalDesc:String = optionsArray[curSelected].description[num];
 
-		//trace(optionsArray[curSelected].changeDescIfString);
+		// trace(optionsArray[curSelected].changeDescIfString);
 
-		if (optionsArray[curSelected].type == 'string'
-			&& optionsArray[curSelected].changeDescIfString)
+		if (optionsArray[curSelected].type == 'string' && optionsArray[curSelected].changeDescIfString)
 			updateText(optionalDesc);
 
 		if (controls.UI_UP_P)
@@ -311,12 +310,11 @@ class BaseOptionsSubstate extends MusicBeatSubstate
 			else
 				descText.text = optionsArray[curSelected].description[0];
 		}
-
 		else if (optionsArray[curSelected].type == 'string' && optionsArray[curSelected].changeDescIfString)
-				descText.text = desc;
+			descText.text = desc;
 		else
 			descText.text = optionsArray[curSelected].description[0];
-		
+
 		descBox.setPosition(descText.x - 10, descText.y - 10);
 		descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
 		descBox.updateHitbox();

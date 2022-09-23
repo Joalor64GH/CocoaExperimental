@@ -37,7 +37,7 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		//FlxG.game.focusLostFramerate = 60;
+		// FlxG.game.focusLostFramerate = 60;
 		FlxG.sound.muteKeys = muteKeys;
 		FlxG.sound.volumeDownKeys = volumeDownKeys;
 		FlxG.sound.volumeUpKeys = volumeUpKeys;
@@ -223,6 +223,9 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
+		if (FlxG.sound.music != null && FlxG.sound.music.volume == 0)
+			FlxG.sound.music.fadeIn(4, 0, 0.7);
+		
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
 		if (gamepad != null)
@@ -361,7 +364,7 @@ class TitleState extends MusicBeatState
 				case 14:
 					addMoreText('Night');
 				case 15:
-					addMoreText('Funkin'); 
+					addMoreText('Funkin');
 				case 16:
 					skipIntro();
 			}

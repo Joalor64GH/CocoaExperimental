@@ -21,7 +21,6 @@ class FunkySettings
 		'ACCEPT' => [ENTER, SPACE],
 		'PAUSE' => [ESCAPE, ENTER],
 		'RESET' => [R],
-
 		'FREEPLAY_RESET' => [R],
 		'FREEPLAY_LISTEN' => [SPACE],
 		'FREEPLAY_MENU' => [CONTROL]
@@ -33,12 +32,13 @@ class FunkySettings
 	public static var noteSplash:Bool = true;
 	public static var timeLeft:Bool = true;
 	public static var timeStyle:String = "Time Left";
-	public static var judgementSkin:String = "CLASSIC";
+	public static var longTimeBar:Bool;
 	public static var showFPS:Bool = true;
 	public static var scoreTween:Bool = true;
 	public static var hideHud:Bool;
 	public static var bounce:Bool = true;
 	public static var sustainStyle:String = "Funkin";
+	public static var hideOpponent:Bool;
 
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
@@ -70,7 +70,7 @@ class FunkySettings
 		save.data.noteSplash = noteSplash;
 		save.data.timeLeft = timeLeft;
 		save.data.timeStyle = timeStyle;
-		save.data.judgementSkin = judgementSkin;
+		save.data.longTimeBar = longTimeBar;
 		save.data.showFPS = showFPS;
 		save.data.scoreTween = scoreTween;
 		save.data.ghostTapping = ghostTapping;
@@ -87,6 +87,7 @@ class FunkySettings
 		save.data.allowSwap = allowSwap;
 		save.data.bounce = bounce;
 		save.data.sustainStyle = sustainStyle;
+		save.data.hideOpponent = hideOpponent;
 		save.data.colorFilter = colorFilter;
 
 		var achieveSave:FlxSave = bind('achievements');
@@ -107,6 +108,7 @@ class FunkySettings
 		save.bind('settings', 'Cocoa');
 
 		GameplayOption.loadGameplayOptions();
+		Highscore.loadTotalScore();
 
 		if (save.data.noteSplash != null)
 			noteSplash = save.data.noteSplash;
@@ -117,8 +119,8 @@ class FunkySettings
 		if (save.data.timeStyle != null)
 			timeStyle = save.data.timeStyle;
 
-		if (save.data.judgementSkin != null)
-			judgementSkin = save.data.judgementSkin;
+		if (save.data.longTimeBar != null)
+			longTimeBar = save.data.longTimeBar;
 
 		if (save.data.showFPS != null)
 			showFPS = save.data.showFPS;
@@ -181,6 +183,9 @@ class FunkySettings
 		if (save.data.sustainStyle != null)
 			sustainStyle = save.data.sustainStyle;
 
+		if (save.data.hideOpponent != null)
+			hideOpponent = save.data.hideOpponent;
+
 		if (save.data.colorFilter != null)
 			colorFilter = save.data.colorFilter;
 
@@ -192,7 +197,7 @@ class FunkySettings
 
 		return loadControls();
 	}
-	
+
 	public static function bind(bind:String):FlxSave
 	{
 		var save:FlxSave = new FlxSave();

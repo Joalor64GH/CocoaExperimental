@@ -1,13 +1,8 @@
 package;
 
-#if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
-#end
-import lime.utils.Assets;
-import openfl.utils.Assets as OpenFlAssets;
 import haxe.Json;
-import haxe.format.JsonParser;
 
 using StringTools;
 
@@ -55,11 +50,8 @@ class WeekData
 	{
 		weeksList = [];
 		weeksLoaded.clear();
-		#if MODS_ALLOWED
+
 		var directories:Array<String> = [Paths.mods('weeks/'), Paths.getPath('weeks/')];
-		#else
-		var directories:Array<String> = [Paths.getPath('weeks/')];
-		#end
 
 		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.getPath('weeks/weekList.txt'));
 		for (i in 0...sexList.length)
@@ -80,7 +72,6 @@ class WeekData
 			}
 		}
 
-		#if MODS_ALLOWED
 		for (i in 0...directories.length)
 		{
 			var directory:String = directories[i];
@@ -105,23 +96,15 @@ class WeekData
 				}
 			}
 		}
-		#end
 	}
 
 	static function getWeekFile(path:String):WeekFile
 	{
 		var rawJson:String = null;
-		#if MODS_ALLOWED
 		if (FileSystem.exists(path))
 		{
 			rawJson = File.getContent(path);
 		}
-		#else
-		if (OpenFlAssets.exists(path))
-		{
-			rawJson = Assets.getText(path);
-		}
-		#end
 
 		if (rawJson != null && rawJson.length > 0)
 			return cast Json.parse(rawJson);

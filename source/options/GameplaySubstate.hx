@@ -18,7 +18,7 @@ class GameplaySubstate extends BaseOptionsSubstate
 
 		var option:Option = new Option('Middlescroll', ['Your strumline will get centered.', 'Your strumline won\'t get centered.'], 'middleScroll');
 		addOption(option);
-		
+
 		var option:Option = new Option('Hitsound Volume:', ['Sets your hitsound volume,\nit will be played when you hit a note.'], 'hitSounds', 'float');
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.0;

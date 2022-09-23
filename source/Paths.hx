@@ -4,14 +4,11 @@ import openfl.display.BitmapData;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.system.System;
-import flixel.util.typeLimit.OneOfTwo;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
-#if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
 import flixel.graphics.FlxGraphic;
-#end
 import flash.media.Sound;
 
 using StringTools;
@@ -69,7 +66,7 @@ class Paths
 	}
 
 	public static function clearTrashMemory()
-	{	
+	{
 		for (key in customImagesLoaded.keys())
 		{
 			if (!garbageAssets.contains(key))
@@ -117,13 +114,11 @@ class Paths
 
 	static public function video(key:String)
 	{
-		#if MODS_ALLOWED
 		var file:String = modsVideo(key);
 		if (FileSystem.exists(file))
 		{
 			return file;
 		}
-		#end
 
 		return 'assets/videos/$key.$VIDEO_EXT';
 	}
@@ -173,7 +168,7 @@ class Paths
 	{
 		var path:String = mods('songs/$file.$SOUND_EXT');
 
-		if (!FileSystem.exists(file))
+		if (!FileSystem.exists(path))
 			path = getPath('songs/$file.$SOUND_EXT');
 
 		if (!customSoundsLoaded.exists(path))
@@ -244,7 +239,7 @@ class Paths
 			var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(path), false, key, false);
 			newGraphic.persist = true;
 			customImagesLoaded.set(key, newGraphic);
-			
+
 			if (!garbageAssets.contains(path))
 				garbageAssets.push(path);
 		}

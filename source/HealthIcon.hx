@@ -43,7 +43,7 @@ class HealthIcon extends FlxSprite
 		if (!Paths.exists('images/$name.png'))
 			name = 'icons/face'; // Prevents crash from missing icon
 
-		var graphic = Paths.image(name);
+		var graphic:FlxGraphic = Paths.image(name);
 		// load the image with no function at all just for getting width and height size
 		loadGraphic(graphic);
 		loadGraphic(graphic, true, Std.int(width / 2), Std.int(height));
@@ -60,6 +60,12 @@ class HealthIcon extends FlxSprite
 			antialiasing = false;
 
 		return this;
+	}
+
+	override public function updateHitbox()
+	{
+		//if you don't actually update the hitbox it looks better
+		centerOrigin();
 	}
 
 	public function getCharacter():String

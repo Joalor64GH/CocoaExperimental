@@ -1,17 +1,9 @@
 package;
 
-import haxe.Timer;
-import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
 import flixel.math.FlxMath;
-#if gl_stats
-import openfl.display._internal.stats.Context3DStats;
-import openfl.display._internal.stats.DrawCallContext;
-#end
-#if flash
-import openfl.Lib;
-#end
+
 #if openfl
 import openfl.system.System;
 #end
@@ -68,6 +60,22 @@ class FPS extends TextField
 		#end
 	}
 
+	final intervalArray:Array<String> = ['MB', 'GB'];
+	// yoinked from forever
+	final function getInterval(num:Float):String
+	{
+		var size:Float = num;
+		var data:Int = 0;
+		while (size >= 1024 && data < intervalArray.length - 1)
+		{
+			data++;
+			size /= 1024;
+		}
+
+		size = Math.round(size * 100) / 100;
+		return size + intervalArray[data];
+	}
+
 	// Event Handlers
 	@:noCompletion
 	#if !flash override #end function __enterFrame(deltaTime:Float):Void
@@ -80,7 +88,7 @@ class FPS extends TextField
 			times.shift();
 		}
 
-		var currentCount = times.length;
+		var currentCount:Int = times.length;
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
 
 		if (currentCount != cacheCount)
@@ -92,7 +100,7 @@ class FPS extends TextField
 			if (memoryMegas > memoryTotal)
 				memoryTotal = memoryMegas;
 
-			text += 'RAM: ${memoryMegas}MB / ${memoryTotal}MB';
+			text += 'RAM: ${getInterval(memoryMegas)} / ${getInterval(memoryTotal)}';
 			#end
 
 			textColor = 0xFFFFFFFF;

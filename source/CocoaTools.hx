@@ -1,8 +1,9 @@
 package;
 
+import flixel.math.FlxMath;
 import flixel.system.FlxSound;
+
 import haxe.Json;
-import sys.io.File;
 
 // lmao using CocoaTools in CocoaTools
 using CocoaTools;
@@ -13,23 +14,43 @@ class CocoaTools
 	public static function resetMusic(?checkPlaying:Bool = true)
 	{
 		if (FlxG.sound.music != null)
-			if (checkPlaying && FlxG.sound.music.playing)
-				FlxG.sound.music.stop();
-
-		FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		{
+			if (checkPlaying)
+			{
+				if (!FlxG.sound.music.playing)
+					FlxG.sound.playMusic(Paths.sound('freakyMenu'));
+			}
+			else
+			{
+				FlxG.sound.playMusic(Paths.sound('freakyMenu'));
+			}
+		}
 	}
 
-	public static function destroyMusic(music:FlxSound)
+	public static function destroyMusic(music:FlxSound):Void
 	{
+		if (music == null)
+			return;
+
+		music.pause();
 		music.stop();
-		music.destroy();
 	}
 
-	public static function returnJudgements():Array<String>
+	static final Abbreviations:Array<String> = ['', 'K', 'M', 'B', 'T', 'Q', 'S', 'SX', 'O', 'N', 'D', 'U', 'TR', 'QT', 'QD', 'SD', 'ST', 'OC', 'NV', 'V', 'C'];
+	public static function formatScore(score:Float):String
 	{
-		var array:Array<String> = File.getContent(Paths.getPath('songs/judgementList.txt')).split(':');
-		return array.copy().toUpperCase().replace(' ', '');
-	}
+		var size:Float = score;
+		var ks:Int = 0;
+		
+		while (size >= 1000 && ks < Abbreviations.length - 1)
+		{
+			ks++;
+			size /= 1000;
+		}
+		
+		size = FlxMath.roundDecimal(size, 1);
+		return size + Abbreviations[ks];
+	}	
 
 	public static function beautifyEvents(event:Array<Array<Dynamic>>):Array<Array<Dynamic>>
 	{
@@ -43,25 +64,6 @@ class CocoaTools
 			}
 
 		return event;
-	}
-
-	public static function convertEvents(rawJson:String):Array<Array<Dynamic>>
-	{
-		var willReturn:Array<Array<Dynamic>> = [];
-		var got:Array<Array<Dynamic>> = Json.parse(rawJson).events;
-
-		for (i in got)
-		{
-			if (i[0] == null)
-				i[0] = -1;
-
-			var values:Array<Dynamic> = i[1];
-
-			for (e in values)
-				willReturn.push([e[0], i[0], e[1], e[2]]);
-		}
-
-		return willReturn;
 	}
 
 	public static function toLowerCase(array:Array<String>):Array<String>

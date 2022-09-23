@@ -31,9 +31,6 @@ class PauseSubState extends MusicBeatSubstate
 
 	var holdTime:Float;
 
-	var timeScale:AbsoluteFlxText;
-	var actualTimeScale(default, set):Float = Conductor.timeScale;
-
 	public function new(x:Float, y:Float)
 	{
 		super();
@@ -48,11 +45,6 @@ class PauseSubState extends MusicBeatSubstate
 			menuItemsOG.insert(num, 'Toggle Botplay');
 			menuItemsOG.insert(num + 1, 'Toggle Practice Mode');
 			menuItemsOG.insert(num + 2, 'Leave Charting Mode');
-
-			if (!PlayState.instance.startingSong)
-			{
-				menuItemsOG.insert(num + 3, 'Time Scale');
-			}
 		}
 
 		if (CoolUtil.difficultyStuff.length < 2)
@@ -116,14 +108,6 @@ class PauseSubState extends MusicBeatSubstate
 		opponentText.visible = PlayState.leftSide;
 		add(botplayText);
 
-		timeScale = new AbsoluteFlxText(Math.POSITIVE_INFINITY, 64);
-		timeScale.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		timeScale.scrollFactor.set();
-		timeScale.borderSize = 2;
-		timeScale.offsetX = 550;
-		timeScale.visible = false;
-		add(timeScale);
-
 		blueballedTxt.alpha = 0;
 		levelDifficulty.alpha = 0;
 		levelInfo.alpha = 0;
@@ -143,8 +127,6 @@ class PauseSubState extends MusicBeatSubstate
 		menuItems = menuItemsOG;
 		regenMenu();
 
-		timeScale.tracker = getObjectFrom('Time Scale');
-
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 
@@ -154,9 +136,6 @@ class PauseSubState extends MusicBeatSubstate
 			pauseMusic.volume += 0.01 * elapsed;
 
 		super.update(elapsed);
-
-		timeScale.text = '$actualTimeScale';
-		timeScale.visible = menuItems[curSelected] == 'Time Scale';
 
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
@@ -171,29 +150,6 @@ class PauseSubState extends MusicBeatSubstate
 			changeSelection(1);
 		}
 
-		switch (menuItems[curSelected])
-		{
-			case 'Time Scale':
-				if (controls.UI_LEFT_P)
-				{
-					actualTimeScale -= 0.1;
-					holdTime = 0;
-				}
-					
-				else if (controls.UI_RIGHT_P)
-				{
-					actualTimeScale += 0.1;
-					holdTime = 0;
-				}
-
-				else if (controls.UI_LEFT || controls.UI_RIGHT)
-				{
-					holdTime += elapsed;
-
-					if (holdTime > 0.5)
-						actualTimeScale += elapsed * 0.06 * (controls.UI_LEFT ? -1 : 1);
-				}
-		}
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];
@@ -247,15 +203,17 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.seenCutscene = false;
 					PlayState.chartingMode = false;
 					PlayState.campaignMisses = 0;
+					CocoaTools.destroyMusic(FlxG.sound.music);
 					if (PlayState.isStoryMode)
 					{
-						MusicBeatState.switchState(new StoryMenuState());
+						MusicBeatState.switchState(new StoryMenuState(true));
 					}
 					else
 					{
-						MusicBeatState.switchState(new FreeplayState());
+						MusicBeatState.switchState(new FreeplayState(true));
 					}
-					CocoaTools.resetMusic();
+					
+					//CocoaTools.resetMusic();
 					PlayState.usedPractice = false;
 					PlayState.changedDifficulty = false;
 					PlayState.cpuControlled = false;
@@ -269,7 +227,6 @@ class PauseSubState extends MusicBeatSubstate
 
 	override function close():Void
 	{
-		Conductor.timeScale = actualTimeScale;
 		pauseMusic.destroy();
 		
 		super.close();
@@ -323,24 +280,5 @@ class PauseSubState extends MusicBeatSubstate
 
 		curSelected = 0;
 		changeSelection();
-	}
-
-	function getObjectFrom(name:String):Alphabet
-	{
-		for (i in grpMenuShit)
-			if (i.text == name)
-				return i;
-
-		return null;
-	}
-
-	function set_actualTimeScale(value:Float):Float 
-	{
-		if (value <= 0)
-			value = 0;
-		else if (value >= 2)
-			value = 2;
-
-		return actualTimeScale = FlxMath.roundDecimal(value, 2);
 	}
 }

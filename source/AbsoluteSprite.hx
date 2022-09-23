@@ -7,16 +7,16 @@ using StringTools;
 class AbsoluteSprite extends FlxSprite
 {
 	public var tracker:FlxSprite;
-	public var xAdd:Float = 0;
-	public var yAdd:Float = 0;
-	public var angleAdd:Float = 0;
-	public var alphaAdd:Float = 0;
+	public var xAdd:Float;
+	public var yAdd:Float;
+	public var angleAdd:Float;
+	public var alphaAdd:Float;
 
 	public var copyAngle:Bool = true;
 	public var copyAlpha:Bool = true;
 	public var copyVisible:Bool = false;
 
-	public function new(?file:String, ?anim:String = null, ?loop:Bool = false, ?setScrollFactor:Bool = true)
+	public function new(?file:String, ?anim:String = null, ?loop:Bool = false)
 	{
 		super();
 		if (file != null)

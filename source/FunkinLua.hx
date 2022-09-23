@@ -562,7 +562,6 @@ class FunkinLua
 
 		Lua_helper.add_callback(lua, "callMethodFromGame", function(func_name:String, args:Array<Dynamic>)
 		{
-
 			Reflect.callMethod(PlayState.instance, Reflect.getProperty(PlayState.instance, func_name), args);
 		});
 
@@ -1314,11 +1313,11 @@ class FunkinLua
 		{
 			CoolUtil.precacheSound(name);
 		});
-		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic)
+		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic, ?arg3:String)
 		{
 			var value1:String = arg1;
 			var value2:String = arg2;
-			PlayState.instance.eventNoteHit(name, value1, value2);
+			PlayState.instance.eventNoteHit(name, value1, value2, arg3);
 			// trace('Triggered event: ' + name + ', ' + value1 + ', ' + value2);
 			return true;
 		});
@@ -1587,16 +1586,17 @@ class FunkinLua
 			PlayState.instance.modchartSprites.set(tag, leBGSprite);
 		});
 
-		Lua_helper.add_callback(lua, "makeAnimatedBGSprite", function(tag:String, image:String, x:Float, y:Float, ?scrollX:Float = 1, ?scrollY:Float = 1, ?spriteType:String = "sparrow")
-		{
-			tag = tag.replace('.', '');
-			resetSpriteTag(tag);
-			var leSprite:ModchartBGSprite = new ModchartBGSprite(x, y, scrollX, scrollY);
+		Lua_helper.add_callback(lua, "makeAnimatedBGSprite",
+			function(tag:String, image:String, x:Float, y:Float, ?scrollX:Float = 1, ?scrollY:Float = 1, ?spriteType:String = "sparrow")
+			{
+				tag = tag.replace('.', '');
+				resetSpriteTag(tag);
+				var leSprite:ModchartBGSprite = new ModchartBGSprite(x, y, scrollX, scrollY);
 
-			loadFrames(leSprite, 'stages/$image', spriteType);
-			leSprite.antialiasing = !FunkySettings.noAntialiasing;
-			PlayState.instance.modchartSprites.set(tag, leSprite);
-		});
+				loadFrames(leSprite, 'stages/$image', spriteType);
+				leSprite.antialiasing = !FunkySettings.noAntialiasing;
+				PlayState.instance.modchartSprites.set(tag, leSprite);
+			});
 
 		Lua_helper.add_callback(lua, "makeLuaGroup", function(tag:String)
 		{
@@ -1613,7 +1613,7 @@ class FunkinLua
 			if (PlayState.instance.modchartGroups.exists(tag))
 			{
 				var leGroup:FlxTypedSpriteGroup<ModchartSprite> = PlayState.instance.modchartGroups.get(tag);
-				
+
 				if (front)
 					PlayState.instance.add(leGroup)
 				else
@@ -1625,30 +1625,28 @@ class FunkinLua
 					else
 					{
 						var position:Int = PlayState.instance.members.indexOf(PlayState.instance.gfGroup);
-						
+
 						if (PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup) < position)
 						{
 							position = PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup);
 						}
-						
 						else if (PlayState.instance.members.indexOf(PlayState.instance.dadGroup) < position)
 						{
 							position = PlayState.instance.members.indexOf(PlayState.instance.dadGroup);
 						}
-						
+
 						PlayState.instance.insert(position, leGroup);
 					}
 				}
 			}
 		});
 
-
 		Lua_helper.add_callback(lua, "addToGroup", function(tag:String, spriteTag:String)
 		{
 			var leGroup:FlxTypedSpriteGroup<ModchartSprite> = PlayState.instance.modchartGroups.get(tag);
 			var leSprite:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
 
-			if (leGroup != null && leSprite != null)	
+			if (leGroup != null && leSprite != null)
 				leGroup.add(leSprite);
 		});
 

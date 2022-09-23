@@ -7,10 +7,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import Section.SwagSection;
-#if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
-#end
 import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
@@ -135,7 +133,7 @@ class Character extends FlxSprite
 					missDuration = json.miss_duration;
 				else
 					missDuration = 1.5;
-				
+
 				flipX = !!json.flip_x;
 				if (json.no_antialiasing)
 				{
@@ -197,6 +195,8 @@ class Character extends FlxSprite
 	{
 		if (!debugMode && animation.curAnim != null)
 		{
+			recalculateDanceIdle();
+
 			if (heyTimer > 0)
 			{
 				heyTimer -= elapsed;
@@ -229,16 +229,15 @@ class Character extends FlxSprite
 
 			if (((!isPlayer && PlayState.leftSide) || (isPlayer && !PlayState.leftSide)) && !specialAnim)
 			{
-				if (!animation.curAnim.name.endsWith('miss') 
+				if (!animation.curAnim.name.endsWith('miss')
 					&& animation.curAnim.name.startsWith('sing')
-					&& !isPlayer && PlayState.leftSide)
+					&& !isPlayer
+					&& PlayState.leftSide)
 				{
 					holdTimer += elapsed;
 				}
 
-				if (animation.curAnim.name.endsWith('miss') 
-					&& animation.curAnim.name.startsWith('sing')
-					&& animation.curAnim.finished)
+				if (animation.curAnim.name.endsWith('miss') && animation.curAnim.name.startsWith('sing') && animation.curAnim.finished)
 				{
 					missTimer += elapsed;
 
@@ -272,7 +271,6 @@ class Character extends FlxSprite
 				else
 					playAnim('danceLeft' + idleSuffix);
 			}
-			
 			else if (animation.getByName('idle' + idleSuffix) != null)
 			{
 				playAnim('idle' + idleSuffix);

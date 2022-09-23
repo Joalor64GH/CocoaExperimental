@@ -1,11 +1,7 @@
 package;
 
-#if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
-#else
-import openfl.utils.Assets;
-#end
 import haxe.Json;
 import haxe.format.JsonParser;
 import Song;
@@ -14,13 +10,15 @@ using StringTools;
 
 typedef StageFile =
 {
-	var directory:String;
 	var defaultZoom:Float;
 	var isPixelStage:Bool;
 
 	var boyfriend:Array<Dynamic>;
 	var girlfriend:Array<Dynamic>;
 	var opponent:Array<Dynamic>;
+
+	var hide_girlfriend:Null<Bool>;
+	var camera_speed:Null<Float>;
 }
 
 class StageData
@@ -62,8 +60,6 @@ class StageData
 		{
 			stage = 'stage';
 		}
-
-		forceNextDirectory = getStageFile(stage).directory;
 	}
 
 	public static function getStageFile(stage:String):StageFile
@@ -74,13 +70,27 @@ class StageData
 		var modPath:String = Paths.mods('stages/' + stage + '.json');
 		if (FileSystem.exists(modPath))
 		{
-			rawJson = File.getContent(modPath);
+			try 
+			{
+				rawJson = File.getContent(modPath);
+			}
+			catch (e)
+			{
+				rawJson = null;
+			}
 		}
 		else
 		{
-			rawJson = File.getContent(path);
+			try 
+			{
+				rawJson = File.getContent(path);
+			}
+			catch (e)
+			{
+				rawJson = null;
+			}
 		}
 
-		return Json.parse(rawJson);
+		return if (rawJson != null) Json.parse(rawJson) else null;
 	}
 }

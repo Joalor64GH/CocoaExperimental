@@ -162,7 +162,7 @@ class CoolUtil
 
 		var absolutePath:String = FileSystem.absolutePath(path);
 		var directory:Array<String> = FileSystem.readDirectory(absolutePath);
-		
+
 		if (directory != null)
 		{
 			var dirCopy:Array<String> = directory.copy();
@@ -177,7 +177,7 @@ class CoolUtil
 
 			directory = dirCopy;
 		}
-		
+
 		return if (directory != null) directory else [];
 	}
 }

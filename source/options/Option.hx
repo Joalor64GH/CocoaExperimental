@@ -8,7 +8,7 @@ class Option
 
 	public var text(get, set):String;
 
-	public var onChange:Void -> Void; // Pressed enter (on Bool type options) or pressed/held left/right (on other types)
+	public var onChange:Void->Void; // Pressed enter (on Bool type options) or pressed/held left/right (on other types)
 
 	public var type(get, default):String = 'bool'; // bool, int (or integer), float (or fl), percent, string (or str)
 
@@ -24,17 +24,17 @@ class Option
 	public var minValue:Dynamic; // Only used in int/float/percent type
 	public var maxValue:Dynamic; // Only used in int/float/percent type
 	public var decimals:Int = 1; // Only used in float/percent type
-	public var changeDescIfString:Bool;// if this is true and option type is string desc will change based on current option
-	// Check UISubstate.hx's Sustain Style option for example usage.
+	public var changeDescIfString:Bool; // if this is true and option type is string desc will change based on current option
 
+	// Check UISubstate.hx's Sustain Style option for example usage.
 	public var displayFormat:String = '%v'; // How String/Float/Percent/Int values are shown, %v = Current value, %d = Default value
 	public var description:Array<String> = [];
 	// First desc will be shown when the option is enabled, second is the opposite (second is optional)
 	// Put only one desc if the type is not bool or string
 	public var name:String = 'Unknown';
 
-	public function new(name:String, description:Array<String>, variable:String, type:String = 'bool',
-		?options:Array<Dynamic>, ?changeDescIfString:Bool = false)
+	public function new(name:String, description:Array<String>, variable:String, type:String = 'bool', ?options:Array<Dynamic>,
+			?changeDescIfString:Bool = false)
 	{
 		this.name = name;
 		this.description = description;
@@ -49,7 +49,6 @@ class Option
 			{
 				defaultValue = getValue();
 			}
-
 			else
 				switch (type)
 				{

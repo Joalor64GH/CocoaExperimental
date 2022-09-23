@@ -1,12 +1,19 @@
 package;
 
-import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
-import openfl.Assets;
 import openfl.Lib;
 import openfl.display.Sprite;
 import openfl.events.Event;
+
+#if CRASHES_ALLOWED
+import Discord.DiscordClient;
+import haxe.CallStack;
+import lime.app.Application;
+import openfl.events.UncaughtErrorEvent;
+import sys.FileSystem;
+import sys.io.File;
+#end
 
 class Main extends Sprite
 {
@@ -80,5 +87,42 @@ class Main extends Sprite
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
+
+		#if CRASHES_ALLOWED
+		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
+		#end
 	}
+
+	//sqirra-rng
+	#if CRASHES_ALLOWED
+	function onCrash(exception:UncaughtErrorEvent):Void
+	{
+		var error:String = "";
+		var date:String = DateTools.format(Date.now(), "%Y-%m-%d %H.%M.%S");
+		var callstack:Array<StackItem> = CallStack.exceptionStack(true);
+
+		for (i in callstack)
+			switch (i)
+			{
+				case FilePos(s, f, l, c):
+					error += 'Called from $f : (line $l)\n';
+				default:
+					Sys.println(i);
+			}
+
+		error += '\nUncaught Exception: ${exception.error}\nReport this to Github Repository:\nhttps://github.com/TheWorldMachine/Cocoa';
+
+		if (!FileSystem.exists('./logs/'))
+			FileSystem.createDirectory('./logs/');
+
+		trace(error, date);
+
+		File.saveContent('./logs/CocoaLog_$date.log', '$error\n');
+		Sys.print('$error was saved!');
+
+		Application.current.window.alert(error, "Game crashed!");
+		DiscordClient.shutdown();
+		Sys.exit(1);
+	}
+	#end
 }

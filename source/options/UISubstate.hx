@@ -11,7 +11,7 @@ class UISubstate extends BaseOptionsSubstate
 			[
 				"Everytime you hit a \"Sick!\", a firework effect will be shown.",
 				// desc when this option is enabled
-				"Everytime you hit a \"Sick!\", a firework effect won't be shown."
+				"Everytime you hit a \"Sick!\", the firework effect will be hidden."
 			], // desc when this option is disabled
 			'noteSplash' // variable name FunkySettings.hx
 		);
@@ -36,6 +36,12 @@ class UISubstate extends BaseOptionsSubstate
 		], 'timeLeft');
 		addOption(option);
 
+		var option:Option = new Option('Screen-sized Time Bar', [
+			"Your time bar will be at bottom\nand screen-sized.",
+			"Your time bar will not screen sized\nand will be at top or bottom based on your choice.",
+		], 'longTimeBar');
+		addOption(option);
+
 		var option:Option = new Option('Time Bar Style:', // option name
 			["Bar will show how much time left or elapsed\nbased on your decision."],
 			// single description
@@ -54,13 +60,13 @@ class UISubstate extends BaseOptionsSubstate
 		var option:Option = new Option('Sustain Notes Style:', [
 			'Sustain notes will be put behind the strums.', // Stepmania
 			'Sustain notes will be put in front of the strums.', // Classic (Funkin)
-			'Sustain notes will be removed from the strums\njust like old versions of Friday Night Funkin\' did.' //Old
-		], 'sustainStyle', 'string',
-		['Stepmania', 'Funkin', 'Old'], true);
+		], 'sustainStyle', 'string', ['Stepmania', 'Funkin',], true);
 		addOption(option);
 
-		var option:Option = new Option('Judgement Skin:', ['Sets judgements skin. (Check judgementList.txt in songs/)'], 'judgementSkin', 'string', 
-		CocoaTools.returnJudgements());
+		var option:Option = new Option('Hide Opponent Strums', [
+			'Opponent\'s strums will be hidden.',
+			'Opponent\'s strums will be shown.',
+		], 'hideOpponent');
 		addOption(option);
 
 		super();

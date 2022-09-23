@@ -20,35 +20,26 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 	function createOptions()
 	{
-		var option:GameplayOption = new GameplayOption(
-            'Scroll Speed Multiplier', 'scroll_speed',
-            'float'
-        );
-        option.changeValue = 0.1;
-        option.maxValue = 3;
-        option.minValue = 0.1;
-        option.scrollSpeed = 1.2;
-        addOption(option);
+		var option:GameplayOption = new GameplayOption('Scroll Speed Multiplier', 'scroll_speed', 'float');
+		option.changeValue = 0.1;
+		option.maxValue = 3;
+		option.minValue = 0.1;
+		option.scrollSpeed = 1.2;
+		addOption(option);
 
-        var option:GameplayOption = new GameplayOption(
-            'Health Gain Multiplier', 'health_gain',
-            'float'
-        );
-        option.changeValue = 0.1;
-        option.maxValue = 5;
-        option.minValue = 0.1;
-        option.scrollSpeed = 1.4;
-        addOption(option);
+		var option:GameplayOption = new GameplayOption('Health Gain Multiplier', 'health_gain', 'float');
+		option.changeValue = 0.1;
+		option.maxValue = 5;
+		option.minValue = 0.1;
+		option.scrollSpeed = 1.4;
+		addOption(option);
 
-        var option:GameplayOption = new GameplayOption(
-            'Health Loss Multiplier', 'health_miss',
-            'float'
-        );
-        option.changeValue = 0.1;
-        option.maxValue = 5;
-        option.minValue = 0.1;
-        option.scrollSpeed = 1.4;
-        addOption(option);
+		var option:GameplayOption = new GameplayOption('Health Loss Multiplier', 'health_miss', 'float');
+		option.changeValue = 0.1;
+		option.maxValue = 5;
+		option.minValue = 0.1;
+		option.scrollSpeed = 1.4;
+		addOption(option);
 
 		var option:GameplayOption = new GameplayOption('Mirror Notes', 'mirror_notes');
 		var option2:GameplayOption = new GameplayOption('Randomize Notes', 'randomize_notes');
@@ -56,13 +47,13 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.incompatibleOption = option2;
 		option2.incompatibleOption = option;
 
-        addOption(option);
-        addOption(option2);
-        addOption(new GameplayOption('No Note Types', 'no_note_types'));
-        addOption(new GameplayOption('Instakill on Miss', 'instakill'));
-        addOption(new GameplayOption('Practice Mode', 'practice_mode'));
-        addOption(new GameplayOption('Botplay', 'botplay'));
-        addOption(new GameplayOption('Opponent Mode', 'opponent_mode'));
+		addOption(option);
+		addOption(option2);
+		addOption(new GameplayOption('No Note Types', 'no_note_types'));
+		addOption(new GameplayOption('Instakill on Miss', 'instakill'));
+		addOption(new GameplayOption('Practice Mode', 'practice_mode'));
+		addOption(new GameplayOption('Botplay', 'botplay'));
+		addOption(new GameplayOption('Opponent Mode', 'opponent_mode'));
 	}
 
 	public function new()
@@ -71,7 +62,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.screenCenter();
-        bg.alpha = 0;
+		bg.alpha = 0;
 		add(bg);
 
 		FlxTween.tween(bg, {alpha: 0.66}, 0.6, {ease: FlxEase.quadInOut});
@@ -245,7 +236,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 							FlxG.sound.play(Paths.sound('scrollMenu'));
 						}
-
 						else if (curOption.type != 'string')
 						{
 							holdValue += curOption.scrollSpeed * elapsed * (controls.UI_LEFT ? -1 : 1);
@@ -348,73 +338,64 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			checkbox.daValue = optionsArray[checkbox.ID].value == true;
 	}
 
-    override function close():Void
-    {
-        GameplayOption.saveGameplayOptions();
-        super.close();
-    }
+	override function close():Void
+	{
+		GameplayOption.saveGameplayOptions();
+		super.close();
+	}
 }
 
 class GameplayOption
 {
-    public var optionName:String;
-    public var option:String;
-    public var value(default, set):Dynamic;
-    public var curOption:Int;
-    public var optionArray:Array<String>;
+	public var optionName:String;
+	public var option:String;
+	public var value(default, set):Dynamic;
+	public var curOption:Int;
+	public var optionArray:Array<String>;
 	public var child:Alphabet;
 	public var incompatibleOption:GameplayOption;
 
-    public var changeValue:Float = 1;
-	public var minValue:Float; 
-	public var maxValue:Float; 
-    public var scrollSpeed:Float;
-    public var decimals:Int = 1; 
+	public var changeValue:Float = 1;
+	public var minValue:Float;
+	public var maxValue:Float;
+	public var scrollSpeed:Float;
+	public var decimals:Int = 1;
 
-    @:isVar public var type(get, set):String;
+	@:isVar public var type(get, set):String;
 
-    public function new(optionName:String, option:String, type:String = 'bool', ?optionArray:Array<String>) 
-    {
-        this.optionName = optionName;
-        this.option = option;
-        this.type = type;
-        this.optionArray = optionArray;
+	public function new(optionName:String, option:String, type:String = 'bool', ?optionArray:Array<String>)
+	{
+		this.optionName = optionName;
+		this.option = option;
+		this.type = type;
+		this.optionArray = optionArray;
 
-        value = options[option];
-    }
+		value = options[option];
+	}
 
-    public static var options:Map<String, Dynamic> = [
-        'scroll_speed' => 1.0,
-        'health_gain' => 1,
-        'health_miss' => 1,
-        'opponent_mode' => false,
-        'botplay' => false,
-        'practice_mode' => false,
-        'randomize_notes' => false,
-        'no_note_types' => false,
-        'mirror_notes' => false,
-        'instakill' => false,
-		'two_hand' => false,
-    ];
+	public static var options:Map<String, Dynamic> = [
+		'scroll_speed' => 1.0, 'health_gain' => 1, 'health_miss' => 1, 'opponent_mode' => false, 'botplay' => false, 'practice_mode' => false,
+		'randomize_notes' => false, 'no_note_types' => false, 'mirror_notes' => false, 'instakill' => false, 'two_hand' => false,
+	];
 
-    public static function loadGameplayOptions():Bool
-    {
-        var save:FlxSave = FunkySettings.bind('gamechangers');
-        
-        if (save.data.options == null)
-            return saveGameplayOptions();
-        else
-            options = save.data.options;
+	public static function loadGameplayOptions():Bool
+	{
+		var save:FlxSave = FunkySettings.bind('gamechangers');
 
-        return false;
-    }
+		if (save.data.options == null)
+			return saveGameplayOptions();
+		else
+			options = save.data.options;
 
-    public static function saveGameplayOptions():Bool
-    {
-        var save:FlxSave = FunkySettings.bind('gamechangers');
-        save.data.options = options;
-        return save.flush();
-    }
+		return false;
+	}
+
+	public static function saveGameplayOptions():Bool
+	{
+		var save:FlxSave = FunkySettings.bind('gamechangers');
+		save.data.options = options;
+		return save.flush();
+	}
 
 	public function setChild(alpha:Alphabet)
 	{
@@ -427,27 +408,27 @@ class GameplayOption
 		return this;
 	}
 
-	function get_type():String 
-    {
-        var returnValue:String = 'bool';
+	function get_type():String
+	{
+		var returnValue:String = 'bool';
 		switch (type.toLowerCase())
-        {
-            case 'float' | 'int' | 'string':
-                returnValue = type;
-        }
+		{
+			case 'float' | 'int' | 'string':
+				returnValue = type;
+		}
 
-        return returnValue;
+		return returnValue;
 	}
 
-	function set_type(value:String):String 
-    {
+	function set_type(value:String):String
+	{
 		return type = value.toLowerCase();
 	}
 
-    function set_value(value:Dynamic):Dynamic
-    {
-        options[option] = value;
-        saveGameplayOptions();
-        return this.value = value;
-    }
+	function set_value(value:Dynamic):Dynamic
+	{
+		options[option] = value;
+		saveGameplayOptions();
+		return this.value = value;
+	}
 }

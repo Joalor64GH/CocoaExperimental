@@ -15,10 +15,28 @@ class ControlsSubState extends MusicBeatSubstate
 	var bindLength:Int = 0;
 
 	var optionShit:Array<Array<String>> = [
-		['NOTES'], ['Left', 'NOTE_LEFT'], ['Down', 'NOTE_DOWN'], ['Up', 'NOTE_UP'], ['Right', 'NOTE_RIGHT'], [''], 
-		['UI'], ['Left', 'UI_LEFT'], ['Down', 'UI_DOWN'], ['Up', 'UI_UP'], ['Right', 'UI_RIGHT'], [''], 
-		['MAIN'], ['Reset', 'RESET'], ['Accept', 'ACCEPT'], ['Back', 'BACK'], ['Pause', 'PAUSE'], [''],
-		['FREEPLAY'], ['LISTEN', 'FREEPLAY_LISTEN'], ['RESET', 'FREEPLAY_RESET'], ['MENU', 'FREEPLAY_MENU'],
+		['NOTES'],
+		['Left', 'NOTE_LEFT'],
+		['Down', 'NOTE_DOWN'],
+		['Up', 'NOTE_UP'],
+		['Right', 'NOTE_RIGHT'],
+		[''],
+		['UI'],
+		['Left', 'UI_LEFT'],
+		['Down', 'UI_DOWN'],
+		['Up', 'UI_UP'],
+		['Right', 'UI_RIGHT'],
+		[''],
+		['MAIN'],
+		['Reset', 'RESET'],
+		['Accept', 'ACCEPT'],
+		['Back', 'BACK'],
+		['Pause', 'PAUSE'],
+		[''],
+		['FREEPLAY'],
+		['LISTEN', 'FREEPLAY_LISTEN'],
+		['RESET', 'FREEPLAY_RESET'],
+		['MENU', 'FREEPLAY_MENU'],
 	];
 
 	var grpOptions:FlxTypedGroup<Alphabet>;
@@ -310,7 +328,7 @@ class ControlsSubState extends MusicBeatSubstate
 
 		if (curAlt)
 			item = grpInputsAlt[index];
-		
+
 		item.changeText(InputFormatter.getKeyName(key));
 		item.alpha = 1;
 	}

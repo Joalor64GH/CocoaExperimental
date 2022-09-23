@@ -52,7 +52,7 @@ class NoteSplash extends FlxSprite
 		else
 			animation.play('splash 0 ${note.noteData}', true);
 
-		animation.finishCallback = function(name)
+		animation.finishCallback = function(name:String)
 		{
 			kill();
 		};

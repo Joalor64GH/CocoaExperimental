@@ -16,6 +16,8 @@ class Highscore
 	public static var songRating:Map<String, Float> = new Map<String, Float>();
 	#end
 
+	public static var totalScore(default, set):Int;
+
 	public static function resetSong(song:String, diff:Int = 0):Void
 	{
 		var daSong:String = formatSong(song, diff);
@@ -122,6 +124,19 @@ class Highscore
 		return weekScores.get(daWeek);
 	}
 
+	public static function loadTotalScore():Int
+	{
+		var bind = FunkySettings.bind('totals');
+		if (bind.data.totalScore == null)
+		{
+			bind.data.totalScore = 0;
+			bind.flush();
+			return 0;
+		}
+		
+		return totalScore = bind.data.totalScore;
+	}
+
 	public static function load():Void
 	{
 		if (FlxG.save.data.weekScores != null)
@@ -136,5 +151,14 @@ class Highscore
 		{
 			songRating = FlxG.save.data.songRating;
 		}
+	}
+
+	static function set_totalScore(value:Int):Int 
+	{
+		var bind = FunkySettings.bind('totals');
+		bind.data.totalScore = value;
+		bind.flush();
+
+		return totalScore = value;
 	}
 }

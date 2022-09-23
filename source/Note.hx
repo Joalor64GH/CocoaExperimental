@@ -19,15 +19,20 @@ class Note extends FlxSprite
 	public var prevNote:Note;
 	public var wasHit:Bool;
 
+	public var copyX:Bool = true;
+	public var copyY:Bool = true;
+	public var copyAlpha:Bool = true;
+	public var copyVisible:Bool = true;
+	public var copyAngle:Bool = true;
+
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
 	public var noteType(default, set):String = null;
 	public var noteSplashTexture(default, set):String;
 
-	public var eventName:String = '';
-	public var eventVal1:String = '';
-	public var eventVal2:String = '';
-
+	public var noAnimation:Bool;
+	public var altAnim:Bool;
+	
 	public var colorSwap:ColorSwap;
 	public var inEditor:Bool = false;
 
@@ -41,10 +46,7 @@ class Note extends FlxSprite
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
 
-	public static var typesToAvoidRandomize:Array<String> = [
-		'Alt Animation',
-		'Hey!',
-	];
+	public static var typesToAvoidRandomize:Array<String> = ['Alt Animation', 'Hey!',];
 
 	public var texture(default, set):String = null;
 
@@ -79,6 +81,10 @@ class Note extends FlxSprite
 					colorSwap.hue = 0;
 					colorSwap.saturation = 0;
 					colorSwap.brightness = 0;
+				case 'No Animation':
+					noAnimation = true;
+				case 'Alt Animation':
+					altAnim = true;
 			}
 			noteType = value;
 		}
@@ -87,7 +93,7 @@ class Note extends FlxSprite
 
 	public function resize(offset:Float)
 	{
-		if (isSustainNote && animation.curAnim != null &&!animation.curAnim.name.endsWith('end'))
+		if (isSustainNote && animation.curAnim != null && !animation.curAnim.name.endsWith('end'))
 		{
 			scale.y *= offset;
 			updateHitbox();
@@ -200,7 +206,7 @@ class Note extends FlxSprite
 		{
 			earlyHitMult = FunkySettings.mult;
 		}
-		
+
 		x += offsetX;
 	}
 
@@ -359,7 +365,7 @@ class Note extends FlxSprite
 		}
 	}
 
-	function set_noteSplashTexture(value:String):String 
+	function set_noteSplashTexture(value:String):String
 	{
 		return noteSplashTexture = value;
 	}

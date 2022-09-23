@@ -394,6 +394,12 @@ class Alphabet extends FlxSpriteGroup
 				case 'centered':
 					y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.5), 0.30);
 
+				case 'd shaped':
+					y = FlxMath.lerp(y, (scaledY * 90) + (FlxG.height * 0.45), 0.16);
+					x = FlxMath.lerp(x, Math.exp(Math.abs(scaledY * 0.8)) * -70 + (FlxG.width * 0.35), 0.16);
+
+					if (x < -900)
+						x = -900;
 				default:
 					var lerpVal:Float = CoolUtil.boundTo(elapsed * 9.6, 0, 1);
 					y = FlxMath.lerp(y, (scaledY * yMult) + (FlxG.height * 0.48) + yAdd, lerpVal);

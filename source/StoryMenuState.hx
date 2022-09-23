@@ -49,15 +49,28 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 
+	var playMusic:Bool;
+
+	public function new(?playMusic:Bool = false)
+	{
+		super();
+
+		this.playMusic = playMusic;
+	}
+
 	override function create()
 	{
 		Paths.clearMemory();
 		Paths.clearTrashMemory();
 
 		WeekData.reloadWeekFiles(true);
+
+		CocoaTools.resetMusic();
+
 		if (curWeek >= WeekData.weeksList.length)
 			curWeek = 0;
-		persistentUpdate = persistentDraw = true;
+		
+		//persistentUpdate = persistentDraw = true;
 
 		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
 		scoreText.setFormat("VCR OSD Mono", 32);
@@ -177,6 +190,9 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
+		if (playMusic)
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+
 		changeWeek();
 
 		super.create();
@@ -210,7 +226,7 @@ class StoryMenuState extends MusicBeatState
 				changeWeek(-FlxG.mouse.wheel);
 				changeDifficulty();
 			}
-	
+
 			if (controls.UI_UP_P)
 			{
 				changeWeek(-1);
@@ -232,6 +248,9 @@ class StoryMenuState extends MusicBeatState
 				leftArrow.animation.play('press');
 			else
 				leftArrow.animation.play('idle');
+
+			if (controls.FREEPLAY_MENU)
+				openSubState(new GameplayChangersSubstate());
 
 			if (controls.UI_RIGHT_P)
 				changeDifficulty(1);

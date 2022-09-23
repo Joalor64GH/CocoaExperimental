@@ -287,7 +287,12 @@ class Controls extends FlxActionSet
 	public var ACCEPT(get, never):Bool;
 
 	inline function get_ACCEPT()
+	{
+		if (FlxG.mouse.justPressed)
+			return true;
+
 		return _accept.check();
+	}
 
 	public var BACK(get, never):Bool;
 

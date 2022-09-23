@@ -1,4 +1,5 @@
 package;
+
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -24,12 +25,11 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var cocoaVersion:String = '0.1 Unstable';
+	public static var cocoaVersion:String = '1.0pre';
 	public static var psychEngineVersion:String = '0.4'; // This is also used for Discord RPC (not anymore)
 	public static var curSelected:Int = 0;
-	
+
 	var cocoaShit:FlxText;
-	var cocoaColor:FlxTween;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var camGame:FlxCamera;
@@ -39,19 +39,9 @@ class MainMenuState extends MusicBeatState
 		'story_mode',
 		'freeplay',
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
+		'credits',
 		#if !switch 'donate', #end
 		'options'
-	];
-
-	var colors:Array<FlxColor> = [
-		FlxColor.RED,
-		FlxColor.ORANGE,
-		FlxColor.YELLOW,
-		FlxColor.CYAN,
-		FlxColor.GREEN,
-		FlxColor.BLUE,
-		FlxColor.fromRGB(75, 0, 130),
-		FlxColor.fromRGB(252, 43, 240),
 	];
 
 	var magenta:FlxSprite;
@@ -171,7 +161,7 @@ class MainMenuState extends MusicBeatState
 	{
 		add(new AchievementObject('friday_night_play', camAchievement));
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-		//trace('Giving achievement ' + achievementID);
+		// trace('Giving achievement ' + achievementID);
 	}
 	#end
 
@@ -209,7 +199,7 @@ class MainMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-FlxG.mouse.wheel);
 			}
-			
+
 			if (controls.BACK)
 			{
 				selectedSomethin = true;
@@ -256,8 +246,8 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new FreeplayState());
 									case 'awards':
 										MusicBeatState.switchState(new AchievementsMenuState());
-									/*case 'credits':
-										MusicBeatState.switchState(new CreditsState()); */
+									case 'credits':
+										MusicBeatState.switchState(new CreditsState());
 									case 'options':
 										MusicBeatState.switchState(new OptionsMenu());
 								}
@@ -313,13 +303,5 @@ class MainMenuState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-
-		if (curStep % 2 == 0)
-		{
-			if (cocoaColor != null)
-				cocoaColor.cancel();
-			
-			cocoaColor = FlxTween.color(cocoaShit, 0.4, cocoaShit.color, colors[curStep % 8], {onComplete: function(twn) cocoaColor = null});
-		}
 	}
 }
