@@ -41,7 +41,7 @@ class Main extends Sprite
 
 		if (stage != null)
 		{
-			init();
+			init();//
 		}
 		else
 		{
