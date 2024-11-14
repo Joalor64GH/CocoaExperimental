@@ -24,11 +24,13 @@ import lime.app.Application;
 
 final class FunkinScript extends SScript
 {
-	override public function new(?scriptFile:String = "")
+	override public function new(?scriptFile:String = "", ?preset:Bool = true, ?startExecute:Bool = true)
 	{
-		super(scriptFile);
+		super(scriptFile, preset, false);
 
 		traces = false;
+
+		execute();
 	}
 
 	override function preset():Void

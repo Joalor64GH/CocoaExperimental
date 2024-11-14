@@ -43,11 +43,11 @@
         "url": "https://github.com/Aidan63/linc_discord-rpc"
       },
       {
-        "name": "SScript-Old",
+        "name": "SScript",
         "type": "git",
         "dir": null,
         "ref": "master",
-        "url": "https://github.com/Joalor64GH/SScript-Old"
+        "url": "https://github.com/Joalor64GH/SScript"
       }
     ]
   }

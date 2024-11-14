@@ -60,10 +60,10 @@
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
+	<haxelib name="SScript" if="SCRIPT_ALLOWED"/>
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="linc_discord-rpc" if="desktop"/>
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
-	<haxelib name="SScript-Old" if="SCRIPT_ALLOWED"/>
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
