@@ -9,7 +9,7 @@ import lime.utils.Assets;
 import sys.io.File;
 import sys.FileSystem;
 import flixel.graphics.FlxGraphic;
-import flash.media.Sound;
+import openfl.media.Sound;
 
 using StringTools;
 

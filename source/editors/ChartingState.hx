@@ -26,7 +26,7 @@ import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.ui.FlxSpriteButton;
@@ -42,10 +42,10 @@ import openfl.utils.ByteArray;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.media.AudioBuffer;
 import haxe.io.Bytes;
-import flash.geom.Rectangle;
+import openfl.geom.Rectangle;
 import sys.io.File;
 import sys.FileSystem;
-import flash.media.Sound;
+import openfl.media.Sound;
 
 using StringTools;
 
