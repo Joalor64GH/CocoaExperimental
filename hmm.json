@@ -29,10 +29,6 @@
         "type": "haxelib"
       },
       {
-        "name": "hscript",
-        "type": "haxelib"
-      },
-      {
         "name": "linc_luajit",
         "type": "git",
         "dir": null,
